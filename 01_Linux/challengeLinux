@@ -1,0 +1,119 @@
+
+##### Aufgabenstellung:
+##### Löse die untenstehenden Aufgaben und dokumentiere deine Lösungswege in Form von Kommentaren innerhalb der jeweiligen Bash Datei.
+##### Es ist nicht zwingend nötig für jede Aufgabe/Skript eine eigene Datei zu erstellen, für die einfacheren Aufgaben reicht es aus, wenn die Lösungen
+##### unter die Fragestellung eingibst.
+##### Für die fortgeschrittenen Aufgaben solltest du jedoch eine eigene Datei erstellen und sie in einem separaten Lösungs-Ordner ablegen,
+##### dieser Ordner ist bereits im geteilten GitHub Repository angelegt
+
+
+##### Aufgabe 1: Grundlegende Befehle
+
+    # Navigieren Sie zum Home-Verzeichnis.
+
+
+    # Erstellen Sie ein neues Verzeichnis namens "CLI-Übung".
+
+
+    # Wechseln Sie in das neue Verzeichnis.
+
+
+    # Erstellen Sie eine leere Textdatei mit dem Namen "notizen.txt".
+
+
+    # Listen Sie den Inhalt des Verzeichnisses auf, um sicherzustellen, dass die Datei erstellt wurde.
+
+
+    # Hängen Sie den Text "Erste Notiz" an die Datei "notizen.txt".
+
+
+    # Zeigen Sie den Inhalt der Datei "notizen.txt" an.
+
+    
+##### Aufgabe 2: Datei- und Verzeichnisumbenennung
+
+    # Benennen Sie die Datei "notizen.txt" in "meine_notizen.txt" um.
+
+    # Erstellen Sie ein neues Verzeichnis namens "Backup".
+
+    # Verschieben Sie die Datei "meine_notizen.txt" in das Verzeichnis "Backup".
+
+
+
+##### Aufgabe 3: Dateisuche und Filterung
+
+    # Wechseln zurück zum Home-Verzeichnis.
+
+    # Erstellen mehrere Textdateien mit unterschiedlichen Namen und dem Text-Inhalt "wichtig"  mitfilfe einer for-Schleife
+
+    # Suchen nach allen Dateien im Lösungs-Verzeichnis, die das Wort "wichtig" enthalten.
+
+    # Lösche alle gefundenen Dateien.
+
+
+##### Aufgabe 4: Pipelines und Befehlskombinationen
+
+    # Erstelle eine Textdatei "zahlen.txt" und fügen Sie einige Zahlen (eine pro Zeile) ein.
+    
+
+    # Filter die Datei "zahlen.txt" nach Zeilen, die größer als 50 sind.
+
+
+    # Sortiere die gefilterten Zahlen in aufsteigender Reihenfolge.
+
+    # Berechne die Summe aller Zahlen in der sortierten Liste.
+
+##### Aufgabe 5: Umgebungsvariablen und Befehlsparameter
+
+    # Erstelle eine Umgebungsvariable namens "MEIN_NAME" und setzen Sie sie auf Ihren Namen.
+
+
+    # Schreibe ein Shell-Skript mit dem Namen "begruessung.sh", 
+    # das "Hallo, <DEIN Name>!" ausgibt, wobei <DEIN NAME> durch den Wert 
+    # der gesetzten Umgebungsvariable ersetzt wird.
+
+    # Gebe dem Skript die Möglichkeit, einen Begrüßungstext 
+    # als Parameter zu akzeptieren, und passen Sie die Ausgabe entsprechend an. - dokumentiere auch deine Eingabe
+
+
+##### Aufgabe 6: fortgeschrittene Skripte (bitte jeweils als eigene Datei speichern und in separatem Ordner ablegen)
+    
+    # Backup-Skript: Erstelle ein Skript, das automatisch Backups von 
+    # bestimmten Dateien oder Verzeichnissen erstellt. Du könntest eine 
+    # Zeitstempel- oder Versionsnummerkonvention verwenden, um die 
+    # Backup-Dateien zu benennen.
+
+    # Wortzähler: Schreibe ein Skript, das die Anzahl der Wörter in einer 
+    # gegebenen Datei zählt und ausgibt.
+
+    # Suche und Ersetze: Entwickle ein Skript, das eine bestimmte 
+    # Zeichenkette in einer Datei sucht und durch eine andere Zeichenkette 
+    # ersetzt.
+                                         
+    # Automatisierte Dateiverarbeitung: Schreibe ein Skript, das automatisch 
+    # Bilder in einem Verzeichnis verkleinert, um deren Dateigröße zu 
+    # reduzieren.
+
+    # Passwortgenerator: Erstelle ein Skript, das zufällige Passwörter 
+    # generiert. Du könntest Parameter verwenden, um die Länge und die 
+    # Verwendung von Sonderzeichen anzupassen.
+
+    # Textbasiertes Spiel: Kreiere ein einfaches textbasiertes Spiel, 
+    # bei dem der Spieler Entscheidungen treffen kann, die den Verlauf 
+    # der Geschichte beeinflussen - nutze dazu lediglich Variablen, echo, read, case, if & else Befehle und Abfragen
+    # Tipp: Entscheidungen/Wahrscheinlichkeiten können über eine modulo (%) Funktion abgefragt werden
+
+
+    # Systemüberwachung: Entwickle ein Skript, das wichtige 
+    # Systeminformationen wie CPU-Auslastung, Speicherbelegung und 
+    # angeschlossene Hardware anzeigt. - halte es einfach und so kurz wie möglich
+
+
+    # Automatisierte Installation: Schreibe ein Skript, das eine Liste 
+    # von Softwarepaketen installiert und dabei überprüft, ob sie bereits 
+    # installiert sind, bevor sie neu installiert werden.
+
+
+    # Schreibe einen Backup-Script für deinen Desktop-Ordner, der die Daten bspw. im Dokumente-Ordner sichert
+    # dazu stelle sicher dass die Daten komprimiert sind und das maximal 5 Backups gesichert werden und das zu erst 
+    # angefertigte automatisch gelöscht wird
