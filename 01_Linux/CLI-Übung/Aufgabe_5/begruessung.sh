@@ -10,6 +10,6 @@ else
 fi
 
 # Überprüfe, ob  Begrüßungstext als parameter übergeben ist 
-if [ $# -gt 0 ]; then
-  echo "ein wurde Begrüßungstext angegeben: $1"
-fi
+# if [ $# -gt 0 ]; then
+#   echo "ein wurde Begrüßungstext angegeben: $1"
+# fi
