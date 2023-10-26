@@ -10,6 +10,9 @@
 # Autor: Credo Ngoukeng
 # Datum: 25.10.2023
 #####################################################################
+# Schritt 1 : export MEIN_NAME="Credo Ngoukeng" 
+# schritt 2 : Schreibe ein Shell-Skript "begruessung.sh
+# schritt 3 : 
 
 # Überprüfe, ob  MEIN_NAME gesetzt ist
 if [ -z "$MEIN_NAME" ]; then
@@ -22,3 +25,5 @@ fi
  if [ $# -gt 0 ]; then
    echo "ein wurde Begrüßungstext angegeben: $1"
  fi
+
+# ./begruessung.sh wird nur mein name ohne parameter ausgegben 
