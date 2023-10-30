@@ -12,7 +12,7 @@ if [ ! -d "$source_dir" ]; then
   exit 1
 fi
 
-# Überprüfe, ob das Backup-Verzeichnis existiert, andernfalls erstelle es
+# Prüft ob der Backup verzeichniss schon existiert wenn nicht dann erstellen 
 if [ ! -d "$backup_dir" ]; then
   mkdir -p "$backup_dir"
 fi
