@@ -15,6 +15,11 @@ prueft_laenger(){
     if [[ ! "$" =~ ^[1-9][0-9]*$ ]]; then
     echo "Ein Fehler : Die länge muss ein positive zahl sein"
     hilfe_und_hinweiß
-    fi 
-    
+    fi
+#überprüfung von zeichenketten bereich
+if (($1< min_laenger || $1 > max_laenger)); then 
+echo " Ein Fehler : Das password länger muss zwischen $min_laenger und $max_laenger sein"
+hilfe_und_hinweiß
+fi 
+
 }
