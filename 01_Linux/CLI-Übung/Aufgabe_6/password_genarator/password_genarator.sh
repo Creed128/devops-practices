@@ -10,3 +10,11 @@ hilfe_und_hinweiß(){
   echo "-s: Verwende Sonderzeichen"
   exit 1
 }
+# funktion zur überprüfen der läenger 
+prueft_laenger(){
+    if [[ ! "$" =~ ^[1-9][0-9]*$ ]]; then
+    echo "Ein Fehler : Die länge muss ein positive zahl sein"
+    hilfe_und_hinweiß
+    fi 
+    
+}
