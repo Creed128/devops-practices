@@ -1,0 +1,10 @@
+# Stage 1: Build
+FROM python:3.12 as builder
+LABEL maintainer="Credo (credongoukeng@gmail.com)"
+WORKDIR /app
+RUN echo "Hello, World!" > output.txt
+# Stage 2: Runtime
+FROM python:3.12
+WORKDIR /app
+COPY --from=builder /app/output.txt .
+CMD cat output.txt
