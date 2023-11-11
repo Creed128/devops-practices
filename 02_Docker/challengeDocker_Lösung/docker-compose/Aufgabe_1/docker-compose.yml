@@ -4,6 +4,6 @@ services:
   web:
     image: nginx
     ports:
-      - "80:80"
+      - "2010:6000"
     volumes:
       - ./testfiles:/usr/share/nginx/html
