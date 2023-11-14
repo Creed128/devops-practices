@@ -4,9 +4,10 @@ services:
   web:
     image: nginx
     ports:
-      - "80:80"
+      - "540:500"
     volumes:
-      - ./testfiles:/usr/share/nginx/html
+      - ./index.html:/usr/share/nginx/html/index.html
+      - ..
     environment:
       - SERVER_NAME=my_server_name
     networks:
@@ -15,7 +16,7 @@ services:
   data-service:
     image: alpine
     volumes:
-      - ./testfiles:/app
+      - .:/app
     networks:
       - my-network
 

@@ -1,20 +1,19 @@
 # Stage 1: Build
-FROM golang:1.17 as builder
+FROM golang:1.19 as builder
 LABEL maintainer="Credo Ngoukeng (credongoukeng@gmail.com)"
 
 WORKDIR /app
 COPY . .
 
 # Build the application
-RUN go mod download \
-    && go build -o my-app
+RUN go build -o main .
 
 # Stage 2: Runtime
 FROM alpine:latest
 
 WORKDIR /app
 
-# Kopiere nur das aus der vorherigen Stufe, was für die Ausführung notwendig ist
-COPY --from=builder /app/my-app .
+# Copy only what is necessary for runtime from the previous stage
+COPY --from=builder /app/main .
 
-CMD ["./my-app"]
+CMD ["./main"]
