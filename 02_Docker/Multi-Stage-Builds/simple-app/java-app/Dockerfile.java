@@ -1,21 +1,23 @@
 # Stage 1: Build
-FROM centos:8 as builder
+FROM maven:latest as builder
 LABEL maintainer="Credo Ngoukeng (credongoukeng@gmail.com)"
-LABEL description="eine einfache Java-Anwendung"
 
 WORKDIR /app
-COPY /my-java-app/pom.xml .
-COPY /my-java-app/ src
+COPY ./my-java-app .
 
-# RUN mvn package
-# Install Maven
-RUN yum install -y maven
+# Build the application
+RUN mvn clean package
 
 # Stage 2: Runtime
-FROM openjdk 
+FROM openjdk:latest
 
 WORKDIR /app
 
-COPY --from=builder /app/target/my-java-app.jar .
+# Copy the JAR file from the builder stage
+COPY --from=builder /app/target/*.jar /app/app.jar
 
-CMD ["java", "-jar", "my-java-app.jar"]
+# Expose the port if your application uses a specific port
+EXPOSE 8080
+
+# Define the entry point to run the application
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
