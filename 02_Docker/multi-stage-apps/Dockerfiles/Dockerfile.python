@@ -1,0 +1,19 @@
+# Stage 1: Build
+FROM openjdk:latest
+WORKDIR /app
+
+# Kopiere die Java-Anwendung
+COPY  ./hello.java .
+
+# Kompiliere die Java-Anwendung und setze den Klassenpfad
+RUN javac hello.java
+
+# Stage 2: Runtime
+#FROM openjdk:11
+#WORKDIR /app
+
+# Kopiere die kompilierten Klassen von der Build-Stage
+#COPY --from=builder /app/hello.class .
+
+# Führe die Java-Anwendung aus
+#CMD ["java", "hello"]
