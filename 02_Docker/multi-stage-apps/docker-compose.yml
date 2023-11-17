@@ -1,0 +1,28 @@
+# docker-compose.yml
+version: '3'
+services:
+  debugging-app:
+    build:
+      context: ../multi-stage-apps/debugging-app
+    ports:
+      - "3000:3000"
+
+  node-app:
+    build:
+      context: ../multi-stage-apps/node-app
+    ports:
+      - "3001:3000"
+
+  web-app-optimization:
+    build:
+      context: ../multi-stage-apps/web-app-optimization
+
+  nginx-app:
+    build:
+      context: ../multi-stage-apps/nginx-app
+    ports:
+      - "8080:80"
+
+  python-app:
+    build:
+      context: ../multi-stage-apps/python-app

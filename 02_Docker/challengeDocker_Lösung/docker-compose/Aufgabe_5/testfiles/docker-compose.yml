@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  web:
+    image: nginx
+    ports:
+      - "540:500"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+      - ..
+    environment:
+      - SERVER_NAME=my_server_name
+    networks:
+      - my-network
+
+  data-service:
+    image: alpine
+    volumes:
+      - .:/app
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
