@@ -15,6 +15,7 @@
 * Auf allen Servern soll es einen zusätzlichen User geben,der zu root werden kann und nur per public key Zugreifen kann (nicht per Passwort -> sshd_config)
 * Manueller ssh login und der root user selber sollen deaktiviert werden
 * Fertige zusätzlich eine Dokumentation deines Codes und der einzelnen Schritte an und präsentiere dein Ergebnis Beim Live Code-Review.
+* Nutze ansible für die Konfig der einzelnen Server
 
 ### Zusatzaufgabe (optional):
   * Es gibt "Bonuspunkte" wenn du nach folgenden Best Practices vorgehst:
