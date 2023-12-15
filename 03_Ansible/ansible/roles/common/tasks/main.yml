@@ -1,0 +1,59 @@
+- name: Création de l'utilisateur credo
+  user:
+    name: credo
+    state: present
+    append: yes
+    createhome: yes
+    shell: /bin/bash
+    groups: sudo
+  become: true
+  become_user: root
+
+- name: Ajout de la clé publique à l'utilisateur credo
+  authorized_key:
+    user: credo
+    key: "{{ lookup('file', '/home/credo/.ssh/id_ed25519.pub') }}"
+    state: present
+
+- name: Désactivation de l'authentification par mot de passe SSH pour root
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+  become: true
+  become_user: root
+
+- name: Désactivation de la connexion directe en tant que root
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^PermitRootLogin'
+    line: 'PermitRootLogin no'
+  become: true
+  become_user: root
+
+- name: Redémarrage du service SSH
+  service:
+    name: ssh
+    state: restarted
+  become: true
+  become_user: root
+
+- name: Install Python 3.x
+  apt:
+    name: python3
+    state: present
+
+- name: Install required Python libraries
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python3-cryptography
+    - python3-openssl
+
+- name: Ajout de l'utilisateur credo aux sudoers
+  copy:
+    dest: /etc/sudoers.d/credo
+    content: "credo ALL=(ALL) NOPASSWD: ALL"
+  become: true
+  become_user: root
