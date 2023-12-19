@@ -1,0 +1,5 @@
+---
+- name: Restart vsftpd
+  systemd:
+    name: vsftpd
+    state: restarted

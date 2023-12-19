@@ -1,0 +1,6 @@
+# ansible/roles/common/tasks/install_python.yml
+---
+- name: Install Python 3.x
+  apt:
+    name: python3   # Package name for Python 3.x
+    state: present  # Ensure it's present

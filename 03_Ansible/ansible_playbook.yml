@@ -1,0 +1,10 @@
+# ansible_playbook.yml
+---
+- hosts: all
+  become: true
+  roles:
+    - common
+    - webserver
+    - docker-server
+    - db-server
+    
