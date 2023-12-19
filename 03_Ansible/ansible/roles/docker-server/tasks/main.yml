@@ -1,0 +1,23 @@
+---
+- name: Installation von Docker
+  apt:
+    name: docker.io
+    state: present
+
+- name: Créer le répertoire /opt/docker-compose
+  file:
+    path: /opt/docker-compose
+    state: directory
+    mode: '0755'
+
+- name: Docker Compose-Konfigurationsdatei kopieren
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/docker-compose/docker-compose.yml
+    
+- name: Supprimer le réseau Docker s'il existe déjà
+  command: docker network rm mynetwork
+  ignore_errors: yes  # Ignorer si le réseau n'existe pas
+
+- name: Créer le réseau Docker
+  command: docker network create mynetwork

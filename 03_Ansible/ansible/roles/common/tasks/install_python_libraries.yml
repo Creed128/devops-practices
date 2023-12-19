@@ -1,0 +1,9 @@
+# ansible/roles/common/tasks/install_python_libraries.yml
+---
+- name: Install required Python libraries
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python3-cryptography
+    - python3-openssl

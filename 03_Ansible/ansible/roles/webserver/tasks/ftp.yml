@@ -1,0 +1,25 @@
+---
+- name: Installation von FTP-Server (vsftpd)
+  apt:
+    name: vsftpd
+    state: present
+
+- name: vsftpd-Konfiguration kopieren
+  template:
+    src: vsftpd.conf.j2
+    dest: /etc/vsftpd.conf
+  notify: Restart vsftpd
+
+- name: FTP-Server neu starten
+  systemd:
+    name: vsftpd
+    state: restarted
+
+- name: Hinzufügen von Benutzern zur vsftpd.userlist
+  copy:
+    content: |
+      # Benutzer für den FTP-Zugriff
+      credo
+      another_user
+    dest: /etc/vsftpd.userlist
+  notify: Restart vsftpd

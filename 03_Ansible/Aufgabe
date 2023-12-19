@@ -17,6 +17,7 @@
 * Fertige zusätzlich eine Dokumentation deines Codes und der einzelnen Schritte an und präsentiere dein Ergebnis Beim Live Code-Review.
 * Nutze ansible für die Konfig der einzelnen Server
 
+
 ### Zusatzaufgabe (optional):
   * Es gibt "Bonuspunkte" wenn du nach folgenden Best Practices vorgehst:
     * nutze eine ansible Control Node und führe die Konfiguration darüber aus anstelle deines lokalen Rechners

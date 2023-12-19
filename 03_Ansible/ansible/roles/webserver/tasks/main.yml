@@ -1,0 +1,37 @@
+# roles/webserver/tasks/main.yml
+
+---
+- include_tasks: ftp.yml
+
+- name: Installation du serveur FTP (vsftpd)
+  apt:
+    name: vsftpd
+    state: present
+
+- name: Copie du fichier de configuration vsftpd
+  template:
+    src: vsftpd.conf.j2
+    dest: /etc/vsftpd.conf
+
+- name: Redémarrage du service vsftpd
+  systemd:
+    name: vsftpd
+    state: restarted
+
+- name: Création ou mise à jour du fichier userlist pour vsftpd
+  copy:
+    content: |
+      # Utilisateurs autorisés pour se connecter via FTP
+      credo
+      autre_utilisateur
+    dest: /etc/vsftpd.userlist
+  notify: Restart vsftpd
+
+- name: Générer les certificats SSL auto-signés
+  openssl_certificate:
+    path: /etc/ssl/certs/ssl-cert-snakeoil.pem
+    privatekey_path: /etc/ssl/private/ssl-cert-snakeoil.key
+    provider: selfsigned
+    owner: www-data
+    group: www-data
+    mode: '0600'
