@@ -1,6 +1,7 @@
 variable "environment" {
   description = "The environment the infrastructure is being built for"
   type        = string
+  default     = "prod"
 }
 
 variable "alb_security_group_id" {
@@ -16,4 +17,9 @@ variable "subnet_ids" {
 variable "vpc_id" {
   description = "The VPC ID where the resources will be created"
   type        = string
+}
+variable "http_port" {
+  description = "http port 80"
+  type        = number
+
 }

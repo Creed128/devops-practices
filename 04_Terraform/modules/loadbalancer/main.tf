@@ -14,7 +14,7 @@ resource "aws_lb" "web_alb" {
 
 resource "aws_lb_target_group" "web_tg" {
   name     = "web-tg-${var.environment}"
-  port     = 80
+  port     = var.http_port
   protocol = "HTTP"
   vpc_id   = var.vpc_id
 
