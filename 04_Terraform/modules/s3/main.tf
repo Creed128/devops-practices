@@ -6,5 +6,19 @@ resource "aws_s3_bucket" "bucket" {
     enabled = var.versioning
   }
 
-  tags = var.tags
+  tags = merge(
+    var.tags,
+    {
+      "Name" = var.bucket_name
+    }
+  )
+
+  lifecycle_rule {
+    id      = "expire-old-objects"
+    enabled = true
+
+    expiration {
+      days = var.expiration_days
+    }
+  }
 }

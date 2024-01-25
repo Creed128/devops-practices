@@ -1,60 +1,73 @@
 variable "region" {
   description = "The AWS region to deploy resources."
   type        = string
-  default     = "eu-central-1"
 }
 
 variable "environment" {
-  description = "The environment (e.g., dev, staging, prod)."
+  description = "The deployment environment (e.g., dev, staging, prod)."
   type        = string
-  default     = "dev"
 }
 
+# S3 Bucket Variables
 variable "s3_bucket_name" {
-  description = "The name of the S3 bucket to create."
+  description = "The name of the S3 bucket."
   type        = string
 }
 
-// ... déclarations pour les autres variables nécessaires pour vos modules ...
+variable "s3_bucket_acl" {
+  description = "The ACL of the S3 bucket."
+  type        = string
+}
 
+variable "s3_versioning" {
+  description = "State of versioning for the S3 bucket (enabled/disabled)."
+  type        = bool
+}
+
+variable "s3_tags" {
+  description = "A mapping of tags to assign to the bucket."
+  type        = map(string)
+}
+
+# VPC Variables
 variable "vpc_cidr" {
-  description = "CIDR for the VPC."
+  description = "The CIDR block for the VPC."
   type        = string
 }
 
 variable "public_subnet_cidr" {
-  description = "CIDR for the public subnet."
+  description = "The CIDR block for the public subnet."
   type        = string
 }
 
 variable "availability_zone" {
-  description = "Availability zone for the subnet"
+  description = "The availability zone in which to create the subnet."
   type        = string
 }
 
-variable "http_port" {
-  description = "The port on which the load balancer is listening."
-  type        = number
-}
-
+# Webserver Variables
 variable "ami_id" {
-  description = "AMI ID for the webserver instances."
+  description = "The AMI ID for the webserver instances."
   type        = string
 }
 
 variable "instance_type" {
-  description = "Instance type for the webserver instances."
+  description = "The type of instance to start for the webserver."
   type        = string
 }
 
 variable "min_size" {
-  description = "Minimum size of the Auto Scaling group."
+  description = "The minimum size of the webserver Auto Scaling group."
   type        = number
 }
 
 variable "max_size" {
-  description = "Maximum size of the Auto Scaling group."
+  description = "The maximum size of the webserver Auto Scaling group."
   type        = number
 }
 
-// ... etc ...
+# Load Balancer Variables
+variable "http_port" {
+  description = "The port the load balancer listens on."
+  type        = number
+}
