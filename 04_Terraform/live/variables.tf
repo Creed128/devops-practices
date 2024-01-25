@@ -1,66 +1,60 @@
 variable "region" {
-  description = "The AWS region to create resources in."
+  description = "The AWS region to deploy resources."
   type        = string
   default     = "eu-central-1"
 }
 
-variable "vpc_cidr" {
-  description = "The CIDR block for the VPC."
+variable "environment" {
+  description = "The environment (e.g., dev, staging, prod)."
   type        = string
-  default     = "10.0.0.0/16"
+  default     = "dev"
+}
+
+variable "s3_bucket_name" {
+  description = "The name of the S3 bucket to create."
+  type        = string
+}
+
+// ... déclarations pour les autres variables nécessaires pour vos modules ...
+
+variable "vpc_cidr" {
+  description = "CIDR for the VPC."
+  type        = string
 }
 
 variable "public_subnet_cidr" {
-  description = "The CIDR block for the public subnet."
+  description = "CIDR for the public subnet."
   type        = string
-  default     = "10.0.1.0/24"
 }
 
 variable "availability_zone" {
   description = "Availability zone for the subnet"
   type        = string
-  default     = "eu-central-1"
 }
 
-# Variables for webserver module
+variable "http_port" {
+  description = "The port on which the load balancer is listening."
+  type        = number
+}
+
 variable "ami_id" {
-  description = "The AMI ID to use for the instances."
+  description = "AMI ID for the webserver instances."
   type        = string
 }
 
 variable "instance_type" {
-  description = "The type of instance to start."
+  description = "Instance type for the webserver instances."
   type        = string
-  default     = "t2.micro"
 }
 
 variable "min_size" {
-  description = "The minimum size of the Auto Scaling Group."
+  description = "Minimum size of the Auto Scaling group."
   type        = number
 }
 
 variable "max_size" {
-  description = "The maximum size of the Auto Scaling Group."
+  description = "Maximum size of the Auto Scaling group."
   type        = number
 }
 
-variable "desired_capacity" {
-  description = "The desired size of the Auto Scaling Group."
-  type        = number
-}
-
-# Variables for loadbalancer module
-variable "alb_security_group_id" {
-  description = "The ID of the security group for the ALB"
-  type        = string
-}
-
-variable "subnet_ids" {
-  description = "A list of subnet IDs for the ALB"
-  type        = list(string)
-}
-
-variable "vpc_id" {
-  description = "The VPC ID where the resources will be created"
-  type        = string
-}
+// ... etc ...
