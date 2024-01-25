@@ -26,8 +26,8 @@ module "webserver" {
   instance_type       = var.instance_type
   min_size            = var.min_size
   max_size            = var.max_size
-  subnet_ids          = [module.vpc.public_subnet_id] // Assurez-vous que c'est un tableau de sous-réseaux
-  security_group_ids  = [module.vpc.security_group_id] // Assurez-vous que c'est un tableau de groupes de sécurité
+  subnet_ids          = module.vpc.subnet_ids
+  security_group_ids  = module.vpc.security_group_ids
   // ... autres variables si nécessaire ...
 }
 
@@ -36,7 +36,7 @@ module "lb_module" {
   environment         = var.environment
   http_port           = var.http_port
   vpc_id              = module.vpc.vpc_id
-  subnet_ids          = [module.vpc.public_subnet_id] // Assurez-vous que c'est un tableau de sous-réseaux
+  subnet_ids          = module.vpc.subnet_ids
   target_group_arn    = module.webserver.target_group_arn
   // ... autres variables si nécessaire ...
 }

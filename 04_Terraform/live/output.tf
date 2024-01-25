@@ -4,12 +4,12 @@ output "s3_bucket_id" {
 }
 
 output "vpc_id" {
-  description = "The ID of the VPC created."
+  description = "The ID of the VPC."
   value       = module.vpc.vpc_id
 }
 
 output "public_subnet_id" {
-  description = "The ID of the public subnet created."
+  description = "The ID of the public subnet."
   value       = module.vpc.public_subnet_id
 }
 

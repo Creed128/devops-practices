@@ -9,8 +9,11 @@ variable "public_subnet_cidr" {
 }
 
 variable "availability_zone" {
-  description = "The availability zone in which to create the subnet."
+  description = "The availability zone to create the subnet in."
   type        = string
 }
 
-# Add other variables as needed
+variable "environment" {
+  description = "The environment name (e.g., 'dev', 'prod')."
+  type        = string
+}
