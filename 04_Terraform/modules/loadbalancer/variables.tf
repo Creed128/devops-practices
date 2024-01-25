@@ -1,25 +1,16 @@
-variable "environment" {
-  description = "The environment the infrastructure is being built for"
-  type        = string
-  default     = "prod"
+variable "http_port" {
+  description = "The port the load balancer listens on."
+  type        = number
 }
 
-variable "alb_security_group_id" {
-  description = "The ID of the security group for the ALB"
+variable "vpc_id" {
+  description = "The ID of the VPC in which to create the load balancer."
   type        = string
 }
 
 variable "subnet_ids" {
-  description = "A list of subnet IDs for the ALB"
+  description = "A list of subnet IDs to attach to the Load Balancer."
   type        = list(string)
 }
 
-variable "vpc_id" {
-  description = "The VPC ID where the resources will be created"
-  type        = string
-}
-variable "http_port" {
-  description = "http port 80"
-  type        = number
-
-}
+# Add other variables as needed
