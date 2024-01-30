@@ -1,14 +1,7 @@
-output "lb_arn" {
-  description = "The ARN of the Load Balancer."
-  value       = aws_lb.this.arn
+output "webserver_lb_arn" {
+  value = aws_lb.webserver_lb.arn
 }
 
-output "lb_dns_name" {
-  description = "The DNS name of the Load Balancer."
-  value       = aws_lb.this.dns_name
-}
-
-output "target_group_arn" {
-  description = "The ARN of the Target Group."
-  value       = aws_lb_target_group.this.arn
+output "webserver_lb_dns_name" {
+  value = aws_lb.webserver_lb.dns_name
 }
