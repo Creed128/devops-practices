@@ -1,3 +1,0 @@
-output "webserver_asg_name" {
-  value = aws_autoscaling_group.webserver_asg.name
-}

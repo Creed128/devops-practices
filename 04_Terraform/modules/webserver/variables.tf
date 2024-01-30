@@ -14,10 +14,16 @@ variable "subnet_ids" {
 
 variable "min_size" {
   description = "Minimum size of the Auto Scaling Group."
-  type        = number
 }
 
 variable "max_size" {
   description = "Maximum size of the Auto Scaling Group."
-  type        = number
+}
+
+variable "security_group_id" {
+  description = "The ID of the security group."
+}
+
+variable "vpc_id" {
+  description = "The VPC ID where the resources will be created."
 }
