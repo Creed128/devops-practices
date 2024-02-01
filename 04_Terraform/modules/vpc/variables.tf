@@ -1,5 +1,6 @@
 variable "vpc_cidr" {
   description = "CIDR block for the VPC."
+  type        = string
 }
 
 variable "public_subnet_cidrs" {
@@ -13,6 +14,6 @@ variable "availability_zones" {
 }
 
 variable "vpc_name" {
-  description = "The name of the VPC."
-  default     = "mon-vpc"
+  description = "The name of the VPC"
+  type        = string
 }
