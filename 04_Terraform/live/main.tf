@@ -14,7 +14,7 @@ module "vpc" {
 module "webserver" {
   source = "../modules/webserver"
 
-  ami_id            = "ami-0ef03f2a1f5df573c"
+  ami_id            = "ami-02fe204d17e0189fb"
   instance_type     = "t2.micro"
   min_size          = 2
   max_size          = 4
