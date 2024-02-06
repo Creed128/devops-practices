@@ -1,14 +1,7 @@
-variable "aws_region" {
-  description = "The AWS region where the S3 bucket and DynamoDB table are created."
-  default     = "eu-central-1"
+output "s3_bucket_name" {
+  value = aws_s3_bucket.terraform_state.bucket
 }
 
-variable "bucket_name" {
-  description = "The name of the S3 bucket to create for storing Terraform state."
-  type        = string
-}
-
-variable "dynamodb_table_name" {
-  description = "The name of the DynamoDB table to create for Terraform state locking."
-  type        = string
+output "dynamodb_table_name" {
+  value = aws_dynamodb_table.terraform_locks.name
 }
