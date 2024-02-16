@@ -3,8 +3,8 @@
 - Docker
 - k3s - https://k3s.io
 - k3d - https://k3d.io (Wrapper für k3s)
-- Helm als Packagemanager (optional)
-- k9s
+- Helm als Packagemanager[optional](https://helm.sh/)
+- k9s (https://github.com/derailed/k9s)
 - lokaler DNS (/etc/hosts bearbeiten um testcluster zu erreichen)
 
 ## Aufgabe:
