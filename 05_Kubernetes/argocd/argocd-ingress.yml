@@ -1,20 +1,18 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  name: argocd-server-ingress
+  name: nginx-whoami-app
   namespace: argocd
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
-  rules:
-  - host: "testcluster"
-    http:
-      paths:
-      - path: /argocd(/|$)(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: argocd-server
-            port:
-              number: 443
+  project: default
+  source:
+    repoURL: 'https://github.com/maxhaeger/coacheeCredo.git'
+    targetRevision: HEAD
+    path: '.'
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
