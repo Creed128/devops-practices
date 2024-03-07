@@ -108,3 +108,68 @@ helm repo update
  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.10.1/manifests/install.yaml
 
  create argocd-ingress.yml to definid route for extern traffic 
+
+
+Hier ist eine detaillierte Beschreibung der Schritte, die ich befolgt habe, um die Probleme mit meinem Kubernetes-Projekt zu lösen, angepasst, um auch für jemanden mit wenig Erfahrung mit Kubernetes, k3d und Minikube verständlich zu sein.
+
+Kontext und Probleme:
+Ich hatte ein Kubernetes-Cluster mit k3d und Minikube konfiguriert, um zwei Anwendungen zu deployen: einen Nginx-Webserver und eine Whoami-Anwendung. Nachdem ich meinen Computer neu gestartet hatte, konnte ich nicht mehr über die konfigurierten URLs auf diese Anwendungen zugreifen, und ich stieß auf Fehler beim Versuch, kubectl-Befehle auszuführen.
+
+Angewandte Lösungen:
+1. Überprüfung des aktiven Kubernetes-Umfelds:
+Der erste Schritt bestand darin, zu überprüfen, welches Kubernetes-Umfeld aktiv war (k3d oder Minikube) und es dann korrekt zu konfigurieren.
+
+Überprüfung des Minikube-Status:
+```
+minikube status
+```
+Dieser Befehl zeigte, dass Minikube gestoppt war. Um die Dinge zu vereinfachen, beschloss ich, ausschließlich k3d zu verwenden.
+
+Starten des k3d-Clusters:
+```
+k3d cluster start testcluster
+```
+Dieser Befehl stellt sicher, dass der k3d-Cluster gestartet und einsatzbereit ist.
+
+Konfigurieren des kubectl-Kontexts:
+```
+kubectl config use-context k3d-testcluster
+```
+Dieser Befehl konfiguriert kubectl so, dass der k3d-Cluster als Standardumgebung verwendet wird.
+
+2. Überarbeiten und Anwenden der Ingress-Konfiguration:
+Die Ingress-Objekte mussten überarbeitet werden, um die Anfragen korrekt zu routen.
+
+Hinzufügen von Annotationen und der Ingress-Klasse:
+Für beide Anwendungen (nginx und whoami) habe ich die Ingress-Dateien aktualisiert, um die Annotation `nginx.ingress.kubernetes.io/rewrite-target: /` hinzuzufügen und sicherzustellen, dass die Ingress-Klasse (`ingressClassName: nginx`) korrekt angegeben war.
+
+Anwenden der Ingress-Konfigurationen:
+```
+kubectl apply -f nginx-ingress.yml
+kubectl apply -f whoami-ingress.yml
+```
+Diese Befehle wenden die aktualisierten Konfigurationen für die Ingress-Objekte an.
+
+3. Aktualisieren von /etc/hosts mit der richtigen IP-Adresse:
+Um über den Browser auf die Anwendungen zugreifen zu können, musste die IP-Adresse des LoadBalancers in der Datei /etc/hosts aktualisiert werden.
+
+Ändern von /etc/hosts:
+Ich habe die alte IP-Adresse durch die dem LoadBalancer von k3d zugewiesene Adresse ersetzt (172.18.0.2, sichtbar über `kubectl get svc --namespace ingress-space`).
+
+Endgültige Überprüfung:
+Nachdem ich diese Änderungen vorgenommen hatte, habe ich überprüft, ob die Anwendungen über die konfigurierten URLs erreichbar waren:
+
+Zugriff auf Nginx:
+```
+curl http://testcluster/webserver
+```
+Dieser Befehl gab den erwarteten HTML-Inhalt der Nginx-Anwendung zurück.
+
+Zugriff auf Whoami:
+```
+curl http://testcluster/whoami
+```
+Dieser Befehl gab die Details der Whoami-Anwendung zurück, was auf einen Erfolg hinwies.
+
+Fazit:
+Indem ich diesen Schritten gefolgt bin, habe ich die Zugriffsprobleme auf die im k3d-verwalteten Kubernetes-Cluster deployten Anwendungen gelöst. Der Schlüssel zum Erfolg war sicherzustellen, dass das Kubernetes-Umfeld korrekt konfiguriert war, dass die Ingress-Objekte richtig definiert waren und dass die IP-Adresse in /etc/hosts die Adresse des k3d-LoadBalancers widerspiegelte.
