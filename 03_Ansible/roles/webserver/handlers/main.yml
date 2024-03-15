@@ -1,0 +1,9 @@
+- name: restart Nginx
+  service:
+    name: nginx
+    state: restarted
+
+- name: restart vsftpd
+  service:
+    name: vsftpd
+    state: restarted
