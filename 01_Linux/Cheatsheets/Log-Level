@@ -1,0 +1,99 @@
+
+journalctl wird ohne Argumente aufgerufen, um alle Systemprotokolle anzuzeigen. Du kannst jedoch verschiedene Optionen verwenden, um die angezeigten Protokolle einzuschränken. Hier sind einige gängige Optionen:
+
+    journalctl -b: Zeigt Protokolle nur für den aktuellen Boot-Vorgang an.
+    journalctl -u service-name: Zeigt Protokolle für einen bestimmten Dienst an.
+    journalctl -p priority-level: Zeigt Protokolle mit einer bestimmten Priorität an.
+    journalctl -n number: Begrenzt die Anzahl der angezeigten Protokolleinträge.
+    journalctl -f: Verfolgt die Protokolle in Echtzeit.
+
+    cat wtmp #binärer Output, zum anzeigen danach einfach
+    last befehlen 
+
+    cat /var/log btmp #ergibt kryptischen Output danach einfach 
+    sudo lastb #um Output anzuzeigen
+    um alle IP/Loginversuche zu zeigen (bei Angriff zb):
+    sudo lastb -adF
+
+    journalctl -fu ssh #checkt live den SSH Service
+
+
+Das Ändern des Log-Levels in Linux hängt von den jeweiligen Diensten oder 
+Anwendungen ab, für die Sie das Log-Level ändern möchten. Log-Level sind 
+hierarchische Stufen, die bestimmen, welche Art von Nachrichten oder 
+Ereignissen in den Log-Dateien erfasst werden. 
+
+Typischerweise gibt es mehrere Stufen, wie z. B. "debug", "info", "warning", 
+"error" usw. Es gibt an der Zahl 8 Loglevel, 0 ist das kritischste und 7 sind nur Informationen.
+
+    KERN_EMERG (0)
+    The highest severity level warning. It is used when the system is unstable.
+
+    KERN_ALERT (1)
+    This log level is used when the error requires immediate user attention.
+
+    KERN_CRIT (2)
+    A log level of 2 is used to inform the user of critical software or hardware issues.
+
+    KERN_ERR (3)
+    Messages pertaining to a log level of 3 are usually used to inform the user of noncritical errors.
+
+    KERN_WARNING (4)
+    The default log level in many Linux distributions. It is used to display warnings about non-important errors.
+
+    KERN_NOTICE (5)
+    A log level of 5 is used to represent normal but significant conditions.
+
+    KERN_INFO (6)
+    KERN_INFO is used to display informational messages.
+
+    KERN_DEBUG (7)
+    KERN_DEBUG is used when the system is in debug mode. These messages contain information that is normally only useful when debugging a program.
+
+
+Hier sind die allgemeinen Schritte, um das Log-Level für Dienste oder 
+Anwendungen in Linux zu ändern:
+
+    Identifizieren des Dienstes oder der Anwendung: Zuerst müssen Sie 
+    den Dienst oder die Anwendung identifizieren, für die Sie das 
+    Log-Level ändern möchten. Jeder Dienst oder jede Anwendung kann 
+    seine eigenen Konfigurationsdateien und Verfahren zur Verwaltung 
+    von Log-Levels haben.
+
+    Finden der Konfigurationsdatei: Normalerweise werden Log-Level 
+    in Konfigurationsdateien festgelegt. Diese Dateien befinden sich 
+    oft im Verzeichnis /etc oder in Unterverzeichnissen davon. 
+    Die Konfigurationsdatei kann den Namen des Dienstes oder der 
+    Anwendung haben oder etwas, das mit Log oder Logging zu tun hat.
+
+    Bearbeiten der Konfigurationsdatei: Öffnen Sie die entsprechende 
+    Konfigurationsdatei in einem Texteditor wie nano, vim oder gedit. 
+    In dieser Datei suchen Sie nach einem Eintrag, der das aktuelle 
+    Log-Level definiert. Das Log-Level wird oft als Zeichenkette 
+    wie "debug", "info", "warning" usw. angegeben.
+
+    Ändern des Log-Levels: Ändern Sie den Wert des Log-Levels 
+    entsprechend Ihren Anforderungen. Speichern Sie die Datei nach 
+    der Bearbeitung.
+
+    Dienst neu starten: In den meisten Fällen müssen Sie den Dienst 
+    neu starten, damit die neuen Log-Level-Einstellungen übernommen werden. 
+    Dies kann durch Ausführen eines Befehls wie 
+    sudo service <dienstname> restart oder sudo systemctl restart <dienstname> 
+    erreicht werden.
+
+Es ist wichtig zu beachten, dass sich die genauen Schritte je nach Dienst oder 
+Anwendung unterscheiden können. Stellen Sie sicher, dass Sie die Dokumentation 
+des jeweiligen Dienstes oder der Anwendung überprüfen, um genaue Anweisungen 
+zum Ändern des Log-Levels zu erhalten.
+
+Um das Loglevel rauszufinden, gibt man diesen Befehl ein:
+cat /proc/sys/kernel/printk
+und erhält z.B solch ein Ergebnis:
+
+cat printk
+4 = console_loglevel (current loglevel)
+4 = default_message_loglevel  
+1 = minimum_console_loglevel
+7 = default_console_loglevel (loglevel at boot)
+

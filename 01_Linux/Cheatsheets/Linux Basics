@@ -1,0 +1,240 @@
+
+Zu erstmaligen updaten und installieren von Gtt folgende Befehle ausführen:
+
+sudo apt update
+sudo apt upgrade
+sudo apt install git
+git --version
+git config --global user.name "mgross"
+git config --global user.email "maximilian.gross@haeger-consulting.de"
+git config --list
+ls -lih # zeigt die Inode-Nummer, Berechtigungen und leserliche Größe an
+ps -ax | grep nginx  # to grab the nginx process and its ID
+
+tar -czvf meinordner.tar.gz /pfad/zum/verzeichnis # packt Archive 
+-c: Erstellt ein Archiv.
+-v: Gibt detaillierte Ausgabe aus.
+-f: Gibt den Namen des Archivs an.
+-z: Kompirmiert zusätzlich noch mit Gzip
+
+
+
+tar -xzf meinordner.tar.gz #entpackt tar/Gzip Archive
+
+lsmod # Treiber identifizieren 
+uname -r # Kernel identifizieren
+
+
+   Filesystem:
+   / = root-Path & declarative absolute Path
+   cd / = geht auf root
+   cd = geht ins Home-Verzeichnis
+   cd ~ = geht auch ins Home-Verteichnis
+   sudo apt install ncdu
+   ncdu / # zeigt alle Dateien hierarchisch nach Größe sortiert an
+
+   lsblk = listet alle Storage-Devices auf folgendermaßen:
+
+NAME                    MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
+nvme0n1                 259:0    0 931,5G  0 disk  
+├─nvme0n1p1             259:1    0     1G  0 part  /boot
+├─nvme0n1p2             259:2    0   512M  0 part  /boot/efi
+└─nvme0n1p3             259:3    0   930G  0 part  
+  └─crypt_dev_nvme0n1p3 253:0    0   930G  0 crypt 
+    ├─system-root       253:1    0 912,7G  0 lvm   /
+    └─system-swap       253:2    0     8G  0 lvm   [SWAP]
+
+
+    df -h #zeigt die Festplattenbelegeung und Volumes an
+
+    Drives werden idR in dem /media oder /mnt Ordner gemountete
+    /medie für temporärer Volumkes (USB/ext. SSD etc.)
+    /mnt - permanente Geräte wie eine zweite Festplatte
+
+# Um Festplatte/Disk zu mounten foglernamßen vorgehen:
+
+sudo mkdir /mnt/usbstick
+lsblk
+
+sudo mount /dev/sdb1 /mnt/usbstick  # mountet Device
+OR
+umount /media/max/usbdevice # wirft Device sauber raus  
+
+df -h #listet alle monts
+
+
+fdisk /dev/sdb 
+p # zeigt alle Partitionen auf jew. Device
+m # for help 
+g # for GPT (am meisten verwendete Partitionstable)
+n # wählt die n(ummer) der Partitionstables [1 ist meist gut, kommt aber drauf an was mna vorhat]
+Y # remove Signature
+w # steht für write
+
+mkfs.ext4 -n "usbname" /dev/sdb # erstellt ein Linux-Filesystem auf der angebenene PArttiion 
+mkfs.exfat /dev/sdb # erstellt ein Microsoft-Filesystem auf der angebenene PArttiion 
+(sudo apt install exfat-utils exfat-fuse)
+
+
+
+   Inode = Einigartige Nummer, welche Metadaten und 
+   Berechtigungen indiziert einer Datei enthält, sie weiß nicht was 
+   IN der Datei ist.
+   Gilt nicht für Flash-Drives, denn jedes Speichermediu hat ein eigenes
+   Set an Inodes.
+
+
+   Sym-Links (auch genann Soft-Links):
+
+   ln -s "$(pwd)/zahlen.txt" ~/Schreibtisch/DevOps # erstellt einen Link vom 
+   # aktuellen Working Directory zum Schreibtisch/DevOps Ordner mines Users
+   # Verlinkt eine lauffähige Datei mit einem symbolischen Link, an anderer Stelle um 
+
+   ln "$(pwd)/zahlen.txt" ~/Schreibtisch/DevOps # erstellt einen Hardlink, welcher den 
+   Link als Datei behandelt. Hat diesselbe Inode wie die Originaldatei, da sie 
+   ein und dasselbe Objekt darstellen indem einfach ein doppelter "redundanter" Eintrag 
+   im Filesystem vornimmt. 
+   Hardlinks können nicht in ein anderes DateisSystem geschoben werden, Sym-Links im Gengenzug schon.
+
+
+   /etc/fstab:
+   Entscheidet, welche Dateine automatisch gemountet werden bei Systemstart.
+   Sehr wichtige Datei, die das Betriebssystem bzw. den Zugriff auf Root, Boot und Swap
+   Partition zerstören kann.
+   Änderungen in dieser Datei sollten mit einem Linecreak begonnen werden damit man 
+   differnzieren kann, welche Einträge schon da waren und welche hinzugefügt wurden.
+
+   cat /etc/fstab ergibt olgenden Output:
+
+# /etc/fstab: static file system information.
+#
+# <file sys>    <mount point>   <type>  <options>       <dump>  <pass>
+
+UUID=a67d0859-d472-4dc1-a84b-cceba7c74dfa       /       ext4    rw,noatime,errors=remount-ro    0       1
+
+# device during installation: /dev/nvme0n1p1
+UUID=1227d9ff-c255-45bb-bf47-3f7c5e630908       /boot   ext3    defaults        0       2
+
+# device during installation: /dev/nvme0n1p2
+UUID=4C82-7F45  /boot/efi       vfat    rw      0       2
+UUID=2ee9a9fd-cebf-478f-bb21-5ab4aa2ae279       none    swap    defaults        0       0
+
+# Das hier sind neue Einträge
+/dev/sdb1 /mnt/myusb ext1 defaults 0 1 
+# man kann direkt hinter defaults, noauto angeben, damit das jew. Device nicht automatisch
+# gemountet wird
+# dazu kann man noch ,ro definieren um bspw. Keute daran zu hindern, etwas auf dem Volume zu schreiben
+# bzw. zu ändern
+
+# defaults = rw, suid, dev, exec, auto, nouser, async automatisch 
+# 0 = dump (wird nicht mehr wirklich benötigt, daher immer auf 0 defaulten)
+# 1 = pass (definiert welches Filesystem/Device in welcher Reihenfolge beim Start getestet wird im Fehlerfall)
+Man kann auch unabhängih von Pass eien Test starten daher auch eher ein Relikt aus älterer Zeit.
+
+# Nachdem man das jew. Device in der fstab definiert hat, reicht es wenn man den Mount-Befehl auch 
+# ohne das Device angeben muss, ausführen kann.ergo reicht 
+mount /mnt/myusb # dafür aus
+
+mount -a # mountet alle vordefinierten Devices 
+
+#ACTUNG:
+Um über die Methode oben ein permantentes Laufwerk in fstab zu definieren, sollte man für einen permanentetn Mount
+immer die UUID (Universal Unique Identifier) nutzen denn Devices könnten nach erneuten an und abschließen 
+anstelle sdb1 zB sda1 heißeb, was den allgemeinen mount Befehl erstmal wieder nichtig macht.
+Die UUID ändert sich pro Device nie.
+Um UUID rauszufinden findet man raus über:
+
+sudo blkid
+# dann sucht man den Eintrag des vorher definierten Devices
+# geht wieder in die /etc/fstab und trägt anstelle des sdb/sda/etc namen 
+# nun "UUID=34246-432-434234-234234-423" ein und sorgt dafür, dass das Gerät automatisch 
+# erkannt und gemountet wird sobald man den mount-Befehl abschickt.
+mount -a # um wieder zu mounten
+
+
+
+
+
+
+
+
+   #Aufbau des OS:
+   
+- besteht grundlegend aus folgenden 3  Komponenten:
+
+Bootloader: 
+Der Bootloader ist der erste Programmcode, der beim Starten des Computers ausgeführt wird. Seine Hauptaufgabe besteht darin, das Betriebssystem zu laden und in 
+den Arbeitsspeicher (RAM) des Computers zu übertragen, damit es dort ausgeführt werden kann. Ohne den Bootloader könnte das Betriebssystem nicht gestartet werden, 
+da es normalerweise auf einer Festplatte oder einem anderen permanenten Speichermedium gespeichert ist. Der Bootloader befindet sich daher in einem speziellen Bereich 
+des Speichers, der vom BIOS (Basic Input/Output System) des Computers zugänglich gemacht wird. Sobald der Bootloader geladen ist, übernimmt er die Kontrolle und lädt 
+den eigentlichen Betriebssystemkern, den sogenannten Kernel.
+
+Linux-Kernel: 
+Der Linux-Kernel ist das Herzstück des Betriebssystems. Er ist ein hochgradig privilegiertes Programm, das direkt mit der Hardware des Computers interagieren kann. 
+Der Kernel stellt eine Schnittstelle zwischen der Hardware und den Anwendungsprogrammen dar. Er verwaltet die Ressourcen des Systems, wie Prozessoren, Speicher, 
+Ein- und Ausgabegeräte und Dateisysteme. Der Linux-Kernel enthält Treiber, die es dem Betriebssystem ermöglichen, mit den verschiedenen Hardwarekomponenten des 
+Computers zu kommunizieren. Darüber hinaus stellt der Kernel auch die grundlegenden Dienste und Funktionen bereit, die für die Ausführung von Anwendungsprogrammen 
+erforderlich sind.
+
+Root-Filesystem: 
+Das Root-Filesystem ist der Hauptordner, der alle Dateien und Verzeichnisse enthält, die für das Betriebssystem und seine Anwendungen benötigt werden. Es ist der 
+Grundbaustein des Dateisystems und wird in der Regel auf einem permanenten Speichermedium wie einer Festplatte oder einem Solid-State-Laufwerk gespeichert. 
+Das Root-Filesystem enthält alle notwendigen Dateien, um das Betriebssystem zu starten, wie Konfigurationsdateien, Bibliotheken, Gerätetreiber und Anwendungsprogramme. 
+Wenn das Betriebssystem hochgefahren ist, wird das Root-Filesystem in den Arbeitsspeicher geladen und steht dann für den Zugriff durch den Linux-Kernel und die laufenden 
+Anwendungen zur Verfügung.Zusammen bilden diese drei Komponenten den grundlegenden Aufbau des Betriebssystems. Der Bootloader startet den Prozess, indem er den Linux-Kernel 
+aus dem Root-Filesystem lädt. Sobald der Kernel geladen ist, übernimmt er die Kontrolle über das System und ermöglicht die Interaktion zwischen Hardware und Software, was 
+letztendlich die Ausführung von Anwendungsprogrammen ermöglicht.
+
+Unterschiede zwischen Windows und Linux/GNU
+Kernel und Lizenzmodell:
+Linux/GNU: Das Linux-Betriebssystem basiert auf dem Linux-Kernel, der unter der GNU General Public License (GPL) veröffentlicht wird. 
+Diese Lizenz erlaubt es den Benutzern, den Quellcode zu sehen, zu modifizieren und frei zu verteilen.
+
+Windows: Windows wird von Microsoft entwickelt und verwendet den Windows-Kernel. Es ist ein proprietäres Betriebssystem, dessen Quellcode 
+nicht öffentlich verfügbar ist, und es gibt Lizenzbeschränkungen für seine Verwendung und Verteilung.
+
+Benutzeroberfläche:
+Linux/GNU: Linux bietet eine Vielzahl von Desktop-Umgebungen, darunter GNOME, KDE, XFCE, etc. Benutzer können diejenige auswählen, die 
+ihren Bedürfnissen und Vorlieben am besten entspricht.
+
+Windows: Windows hat eine festgelegte Benutzeroberfläche, die sich im Laufe der Versionen entwickelt hat (z. B. Windows 7, 8, 10). 
+Benutzer können einige Anpassungen vornehmen, aber die grundlegende Oberfläche bleibt relativ gleich.
+
+Softwarekompatibilität:
+Linux/GNU: Obwohl Linux in den letzten Jahren in Bezug auf Softwarekompatibilität besser geworden ist, haben viele Desktop-Anwendungen 
+immer noch eine bessere Unterstützung für Windows. Viele beliebte Anwendungen und Spiele sind primär für Windows entwickelt worden.
+
+Windows: Windows ist das dominierende Betriebssystem für Desktop-Computer, was bedeutet, dass eine breite Palette von Softwareanwendungen 
+und Spielen direkt für Windows verfügbar ist.
+
+Dateisystem:
+Linux/GNU: Linux verwendet ein hierarchisches Dateisystem, bei dem alles als Datei oder Verzeichnis behandelt wird. Es unterstützt 
+Dateiberechtigungen, die eine feinere Kontrolle über den Zugriff auf Dateien ermöglichen.
+
+Windows: Windows verwendet das New Technology File System (NTFS), das ein modernes und leistungsfähiges Dateisystem ist. Es bietet 
+ebenfalls Dateiberechtigungen, aber sie sind in der Regel weniger granular als die von Linux.
+
+Sicherheit:
+Linux/GNU: Linux gilt im Allgemeinen als sicherer als Windows, insbesondere aufgrund der strengeren Zugriffskontrollen und der 
+Verwendung von Open-Source-Software, die von einer breiten Community überprüft wird.
+
+Windows: Windows ist aufgrund seiner Marktstellung ein häufigeres Ziel für Malware und Viren. Microsoft hat jedoch in den letzten 
+Jahren große Fortschritte bei der Verbesserung der Sicherheit gemacht.
+
+Hardwareunterstützung:
+Linux/GNU: Linux bietet eine breite Palette von Hardwareunterstützung, insbesondere für Server- und Entwicklungsanwendungen. 
+Allerdings kann es immer noch Probleme mit einigen speziellen oder neueren Hardwarekomponenten geben.
+
+Windows: Windows hat aufgrund seiner Popularität eine ausgezeichnete Hardwareunterstützung und ist in der Regel besser für den 
+Mainstream-Desktop- und Laptop-Einsatz geeignet.
+
+Kommandozeile:
+Linux/GNU: Linux hat eine mächtige Kommandozeile (Terminal), die eine Vielzahl von Aufgaben effizient erledigen kann. 
+Viele fortgeschrittene Benutzer schätzen die Flexibilität und Automatisierungsmöglichkeiten der Linux-Kommandozeile.
+
+Windows: Windows hat auch eine Kommandozeile, die als "Windows PowerShell" oder "Eingabeaufforderung" bezeichnet wird. 
+Obwohl es leistungsfähig ist, wird es oft als weniger vielseitig als die Linux-Kommandozeile angesehen.
+
+
+Diese Unterschiede machen Linux/GNU und Windows für verschiedene Benutzerprofile und Anwendungsfälle besser geeignet. 
+Die Wahl des Betriebssystems hängt daher von den individuellen Bedürfnissen, Präferenzen und dem Verwendungszweck ab.

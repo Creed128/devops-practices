@@ -1,0 +1,252 @@
+Key Takeaways:
+
+ssh-keygen -b 4096
+
+
+_______________________
+
+
+ssh-copy-id -i ~/.ssh/id_rsa.pub user@192.168.0.2
+
+Der SSH-Client
+
+Das funktioniert normalerweise in einem Terminal-Fenster[2] so:
+
+ssh pi@192.168.178.38 # normale Verbindung mit Username
+
+Mit diesem Befehl verbindet man sich als Nutzer pi auf dem Rechner mit 
+der IP-Adresse 192.168.178.38 ein. Sofern eine Namensauflösung konfiguriert 
+ist, kann man statt der IP-Adresse auch alternativ den Rechnernamen oder eine 
+Domain angeben, also z.B.
+
+
+ssh -v mgross@192.168.0.2 #Verbose Parameter fürs Troubleshooting
+
+ssh -i ~/.ssh/id_rsa mgross@192.168.0.2 # wählt den Key aus, den ich für die Authentifizierung benötige
+wichtig bei mehreren SSH-Verbindungen
+
+
+SSH-Agent:
+ps aux | grep ssh # to check if ssh-agent is running
+
+eval "$(ssh-agent)" # to get the pid of ssh-agent
+
+ssh-add ~/.ssh/id_rsa  # cached den Private Key indem es ihn entschlüsselt
+
+Server-Config:
+- systemctl enable sshd 
+- systemctl start sshd
+- Konfigurationen unter /etc/ssh/sshd_config vornehmen
+- Port ggfls. auf 2222 ändern 
+- weiteren User (KEIN ROOT) anlegen und Anmeldung testen!!!
+- PermitRootLogin auf no setzen 
+- PasswordAutentication auch auf no setzen!!! (vorher SSH-Key testen!)
+- unter ~/.ssh/authorized_keys den .pub Key der jew. Nutzer legen 
+- systemctl restart sshd 
+- systemctl status sshd
+
+- ssh -p 2222 user@serverip 
+
+
+Troubleshooting:
+- Netzwerkebene zu erst untersuchen nac OSI-Modell (Bit, ping, tracert, netsat)
+- wenn .ssh-Ordner falsch berechtigt ergo drwxrwxrwx, dann ist die Trust-Relatioship hinüber und keine Verbindung ist möglich
+- Außerdem dürfen lediglih die public Keys readable sein für Gruppen ud Andere, der Rest is rw nur für den jew. User, 
+  die config-Datei auch rw bei Grfuppen
+- tail -f /var/log/auth.log
+
+ssh user@sol-1
+# weiteres Beispiel
+ssh user@example.com 
+
+Ist der Rechner, mit dem man sich verbinden will, erreichbar, 
+sieht die Antwort z.B. so aus:
+
+pi@192.168.178.38's password: 
+Linux minecraftpi 5.4.51+ #1333 Mon Aug 10 16:38:02 BST 2020 armv6l
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Fri Oct 16 19:25:15 2020 from 192.168.178.37
+
+Als erstes wird das Passwort des Nutzers pi auf dem entfernten Rechner abgefragt. 
+Nach erfolgreicher Eingabe ist man eingeloggt und befindet sich in einer interaktiven Shell. 
+Die Angabe des Benutzernamens ist optional. Wenn man sich mit dem gleichen Benutzernamen 
+wie auf dem lokalen Rechner anmelden will, lautet der Befehl
+
+ssh 192.168.178.38 
+
+das pi@ kann entfallen.
+
+Man kann auch einfach einen Befehl anhängen, der anstelle der Terminal-Session ausgeführt wird. 
+Nach der Ausführung des Befehls wird die SSH-Session dann automatisch beendet:
+
+ssh pi@192.168.178.38 cat /etc/issue 
+
+pi@192.168.178.38's password: 
+Raspbian GNU/Linux 10 \n \l
+
+Oder etwas komplizierter - eine Datensicherung machen ("backup"):
+
+ssh root@server 'cd /etc; tar czvf - network/' | cat > etc_network_backup.tar.gz 
+
+vergrößern
+
+Password:
+network/
+network/interfaces
+network/if-post-down.d/
+network/if-pre-up.d/
+network/if-up.d/
+network/if-down.d/
+network/options
+network/interfaces.pre-etherconf
+network/interfaces.1
+network/run
+
+Bei einer langsamen Verbindung empfiehlt sich zusätzlich die Benutzung der 
+Option -C (großes C), die zusätzlich zur Verschlüsselung eine transparente 
+Kompression der übertragenen Daten aktiviert. Bei einer schnellen Verbindung 
+wird die Kompression aber vermutlich bremsen.
+
+Sollte die Verbindung nicht mehr reagieren, z.B. wenn der SSH-Server 
+heruntergefahren wurde, lässt sich der SSH-Client mit der Eingabe von "~." (nacheinander) beenden.
+Hinweis:
+
+Wer (noch) einen Windows-Desktop benutzt und über das SSH-Protokoll auf eine 
+Linux-Maschine zugreifen will, kann das Programm PuTTY nutzen.
+SSH Host Fingerprint
+
+Bei SSH gibt es im Gegensatz zu HTTPS gesicherten Webseiten keine zentralen Zertifikatsanbieter, 
+die sicherstellen, dass man sich mit dem richtigen Server verbindet.
+
+In den meisten Fällen wird automatisch bei der Installation ein neuer Schlüssel generiert. 
+Verbindet sich ein Client das erste mal mit diesem Server ist der angebotene Schlüssel noch unbekannt 
+und man wird gefragt, ob man sich mit dem Server verbinden möchte.
+Achtung!
+
+Der Fingerprint stellt sicher, dass man sich nicht mit einem falschen 
+Server verbindet.
+
+Einer der häufigsten Gründe für unbekannte Fingerprints ist die 
+Neuinstallation eines Systems, bei dem neue Schlüssel generiert werden.
+
+Es kann jedoch auch ein "Man-in-the-Middle-Angriff" sein, bei dem die 
+Verbindung auf einen anderen Server umgeleitet wurde.
+
+Aus diesem Grund muss der Fingerprint immer gegen eine vertrauenswürdige 
+Quelle verglichen werden.Prüfen des Fingerprints
+
+Beim ersten Verbindungsaufbau zu einem Server wird man gefragt, ob man 
+sich mit dem Server verbinden möchte.
+
+ssh github.com 
+
+The authenticity of host 'github.com (140.82.121.3)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+
+In diesem Fall möchte sich der SSH-Client mit Github.com verbinden und 
+man wird gefragt, ob man mit dem Verbindungsaufbau weitermachen möchte.
+
+Diese Abfrage sollte man nicht einfach bestätigen, sondern den 
+Fingerabruck mit einer vertrauenswürdigen Quelle vergleichen. Github 
+hat die Fingerprints unter folgender Adresse veröffentlicht: 
+https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints 🇬🇧
+
+Falls der SSH-Client die Möglichkeit bietet, einen Fingerprint einzugeben, 
+ist diese Methode immer zu bevorzugen. Man muss dann nur den Fingerprint
+ von der Webseite kopieren und im Terminal einfügen.
+
+Der Grund ist, dass es bei einem manuellen Vergleichen von Fingerprints 
+zu Fehlern kommen kann und man einen ähnlichen Fingerprint bestätigt und 
+sich mit dem falschen Server verbindet.
+Achtung!
+
+Sollte der Fingerprint unbekannt sein, muss man den Server-Administrator 
+nach dem richtigen Fingerprint fragen.
+
+Bei einem gemieteten Server ist es auch möglich, den Support des 
+Unternehmens zu kontaktieren. Man sollte sich jedoch nicht dazu 
+verleiten lassen, einfach die Verbindung zu akzeptieren.
+Warnung bei geänderten Fingerprints
+
+Bei allen weiteren Kontakten stellt das ssh-Programm jedoch von 
+nun an über asymmetrische Kryptografie sicher, dass der Server 
+auch über den richtigen privaten Schlüssel verfügt, der zum 
+öffentlichen, in der Datei ~/.ssh/known_hosts abgelegten passt, 
+und verweigert im Zweifelsfall den Verbindungsaufbau. Hier eine 
+Beispielausgabe:
+vergrößern
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:2iJAHZZHlYMrlrBGw3t7Ma62TuZ0p7p+av3O4W+cpHY.
+Please contact your system administrator.
+Add correct host key in /home/tux/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /home/tux/.ssh/known_hosts:6
+  remove with:
+  ssh-keygen -f "/home/tux/.ssh/known_hosts" -R 172.217.22.227
+ED25519 host key for 172.217.22.227 has changed and you have requested strict checking.
+Host key verification failed.
+
+Es gibt mehrere Gründe für geänderte Fingerprints. Einer der häufigsten 
+ist die Neuinstallation eines Systems. Jedoch kann dies auch ein Zeichen
+ dafür sein, dass man sich mit einem falschen Server verbindet (MITM).
+
+Bei einer Warnung sollten man auf jeden Fall den Server-Administrator 
+oder den Support kontaktieren und fragen, ob der Server neu installiert
+ oder die Schlüssel neu generiert wurden. Sollte dies der Fall sein, muss 
+man sich die aktuellen Fingerprints über eine vertrauenswürdige Quelle 
+schriftlich zukommen lassen.
+
+Hat sich der Fingerprint aus einem legitimen Grund geändert, kann man 
+den alten Fingerprint mit folgendem Befehl entfernen:
+
+ssh-keygen -f <DATEI> -R <HOST> 
+
+Im obigen Beispiel also
+
+ssh-keygen -f "/home/tux/.ssh/known_hosts" -R 172.217.22.227 
+
+⚓︎
+Fingerprint des Servers ermitteln
+
+Den Fingerprint nach einer Neuinstallation zu ermitteln, kann eine 
+besondere Herausforderung sein. Dies trifft insbesondere für automatisch 
+installierte Systeme zu.
+
+Falls es sich um eine virtuelle Maschine handelt, hat man oft die 
+Möglichkeit, eine Terminal-Sitzung in der Administrationsoberfläche 
+zu starten. Solche Administrationsoberflächen sind meist mittels HTTPS 
+abgesichert und somit sollte die Verbindung vertrauenswürdig sein.
+
+Den Fingerprint eines Servers kann man anschließend in einem lokalen 
+Terminal mit dem Systemprogramm ssh-keygen ermitteln.
+
+Als Format für die Fingerprints werden MD5 und SHA256 unterstützt. 
+Aktuell wird immer mehr auf SHA256 gewechselt, jedoch sind vereinzelt 
+auch noch MD5 Finperprints anzutreffen. Aus diesem Grund sollte man 
+die Fingerprints in beiden Formaten ermitteln.
+
+ssh-keygen -f /etc/ssh/ssh_hoSt_ecdsa_key.pub -l -E md5
+ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key.pub -l -E sha256 
+
+In den meisten Fällen werden mehrere Schlüssel für einen SSH-Server 
+generiert. Folgender Einzeiler ermittelt die SHA256-Fingerprints für 
+alle Schlüssel.
+
+find /etc/ssh/ -name 'ssh_*.pub' -exec ssh-keygen -f {} -l -E sha256 \; 
+
+Analog dazu kann man auch die MD5-Fingerprints berechnen:
+
+find /etc/ssh/ -name 'ssh_*.pub' -exec ssh-keygen -f {} -l -E md5 \; A

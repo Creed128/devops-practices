@@ -1,0 +1,117 @@
+1.1.2. Shell types
+
+Just like people know different languages and dialects, your UNIX system will usually offer a variety of shell types:
+
+    sh or Bourne Shell: the original shell still used on UNIX systems and in UNIX-related environments. This is the basic shell, a small program with few features. While this is not the standard shell, it is still available on every Linux system for compatibility with UNIX programs.
+
+    bash or Bourne Again shell: the standard GNU shell, intuitive and flexible. Probably most advisable for beginning users while being at the same time a powerful tool for the advanced and professional user. On Linux, bash is the standard shell for common users. This shell is a so-called superset of the Bourne shell, a set of add-ons and plug-ins. This means that the Bourne Again shell is compatible with the Bourne shell: commands that work in sh, also work in bash. However, the reverse is not always the case. All examples and exercises in this book use bash.
+
+    csh or C shell: the syntax of this shell resembles that of the C programming language. Sometimes asked for by programmers.
+
+    tcsh or TENEX C shell: a superset of the common C shell, enhancing user-friendliness and speed. That is why some also call it the Turbo C shell.
+
+    ksh or the Korn shell: sometimes appreciated by people with a UNIX background. A superset of the Bourne shell; with standard configuration a nightmare for beginning users.
+
+The file /etc/shells gives an overview of known shells on a Linux system:
+
+mia:~> cat /etc/shells
+/bin/bash
+/bin/sh
+/bin/tcsh
+/bin/csh
+
+Your default shell is set in the /etc/passwd file, like this line for user mia:
+
+mia:L2NOfqdlPrHwE:504:504:Mia Maya:/home/mia:/bin/bash
+
+To switch from one shell to another, just enter the name of the new shell in the active terminal. The system finds the directory where the name occurs using the PATH settings, and since a shell is an executable file (program), the current shell activates it and it gets executed. A new prompt is usually shown, because each shell has its typical appearance:
+
+mia:~> tcsh
+[mia@post21 ~]$
+
+How Do You Identify a Bash Script?
+File extension of .sh.
+
+By naming conventions, bash scripts end with a .sh. However, bash scripts can run perfectly fine without the sh extension.
+Scripts start with a bash bang.
+
+Scripts are also identified with a shebang. Shebang is a combination of bash # and bang ! followed the the bash shell path. This is the first line of the script. Shebang tells the shell to execute it via bash shell. Shebang is simply an absolute path to the bash interpreter.
+
+Below is an example of the shebang statement.
+
+#! /bin/bash
+
+The path of the bash program can vary. We will see later how to identify it.
+
+
+
+Execution rights
+
+Scripts have execution rights for the user executing them.
+
+An execution right is represented by x. In the example below, my user has the rwx (read, write, execute) rights for the file test_script.sh
+image-98
+File colour
+
+
+a+x oder ugo+x 	Eine Datei für alle Nutzer ausführbar machen.
+u+r 	        Der Eigentümer darf (zusätzlich zu vorhandenen Rechten) lesen.
+a+w oder ugo+w 	Alle dürfen zusätzlich zu vorhandenen Rechten schreiben.
+g-w 	        Der Gruppe werden die Schreibrechte entzogen.
+o=r 	        Andere Benutzer dürfen nur lesen, nicht schreiben oder ausführen.
+g=rw 	        Die Gruppe darf nur lesen und schreiben, ein eventuell           vorhandenes Ausführungsrecht wird entfernt.
+u+s 	    Setzt das SetUID-Bit 
+
+Examples:
+
+chmod 777 HelloWorld.sh
+OR
+chmod ugo+rwx HelloWorld.sh   
+is the same
+
+Subshells, die durch runde Klammern () erstellt werden, bieten in Bash einige Vorteile und Use-Cases:
+
+    Isolierung von Umgebungen: Der Hauptvorteil von Subshells liegt in der Isolierung von Umgebungen. Alles, was innerhalb einer Subshell ausgeführt wird, beeinflusst nicht die Umgebung außerhalb der Subshell. Das bedeutet, dass Variablen, die innerhalb der Subshell geändert werden, die Werte außerhalb der Subshell nicht ändern.
+
+    Beispiel:
+
+    bash
+
+x=10
+(x=20)
+echo "x außerhalb der Subshell: $x"
+
+Hier wird "x außerhalb der Subshell: 10" ausgegeben, da die Änderung der Variable x innerhalb der Subshell die Umgebung außerhalb nicht beeinflusst.
+
+Befehlsgruppierung: Subshells ermöglichen das Gruppieren von Befehlen, was hilfreich sein kann, wenn du sicherstellen möchtest, dass mehrere Befehle zusammen ausgeführt werden, ohne die Umgebung zu beeinflussen.
+
+Beispiel:
+
+bash
+
+(cd /pfad/zum/verzeichnis && ls)
+
+Hier wird der cd-Befehl in einer Subshell ausgeführt, und danach wird der ls-Befehl im Verzeichnis nach dem cd ausgeführt.
+
+Unabhängige Variablen: Du kannst Subshells verwenden, um temporäre Variablen zu erstellen, die nur innerhalb des Subshell-Kontexts existieren und die Umgebung außerhalb nicht beeinflussen.
+
+Beispiel:
+
+bash
+
+(temp_var="Dies ist eine temporäre Variable")
+echo "temp_var außerhalb der Subshell: $temp_var"
+
+Hier wird "temp_var außerhalb der Subshell:" ausgegeben, da die temporäre Variable nur innerhalb der Subshell existiert.
+
+Parallele Ausführung: Subshells können auch für parallele Ausführung von Befehlen verwendet werden, insbesondere wenn du Prozesse gleichzeitig ausführen möchtest.
+
+Beispiel:
+
+bash
+
+    (command1 &)  # Führt command1 in einer Subshell im Hintergrund aus
+    (command2 &)
+    wait  # Wartet auf die Beendigung aller Subshells
+
+Subshells sind nützlich, wenn du die Umgebung isolieren, Befehle gruppieren oder temporäre Variablen verwenden möchtest, die nicht die Hauptumgebung beeinflussen sollen. Sie sind besonders hilfreich, wenn du sicherstellen möchtest, dass bestimmte Aktionen oder Änderungen begrenzt und unabhängig bleiben.

@@ -1,0 +1,378 @@
+Variablen:
+
+<< 'Com' 
+In Bash sind Variablen Container, in denen du Daten speichern kannst. Diese Daten können 
+Textzeichenfolgen, Zahlen oder andere Werte sein. Variablen werden verwendet, um Werte zu 
+speichern, zu referenzieren und in Befehlen oder Skripten zu verwenden.
+
+    Runde Klammern ():
+    In Bash haben runde Klammern verschiedene Verwendungszwecke:
+    Befehlsausführung: Wenn du Befehle in runden Klammern einschließt ( ), werden 
+    sie in einer Subshell ausgeführt. Das bedeutet, dass der darin enthaltene Befehl 
+    in einer separaten Umgebung ausgeführt wird und seine Änderungen die Umgebung außerhalb 
+    der Klammern nicht beeinflussen.
+Comps -ax | grep nginx
+
+#  Beispiel:
+
+output=$(ls)  # Führt 'ls' aus und speichert die Ausgabe in der Variable 'output'
+
+# Arithmetische Berechnungen: Runde Klammern können auch zur Durchführung von 
+# arithmetischen Berechnungen verwendet werden.
+
+# Beispiel:
+
+result=$((2 + 3))
+
+# Eckige Klammern []:
+# Eckige Klammern werden in Bash hauptsächlich für Bedingungsprüfungen verwendet.
+
+# Beispiel:
+
+if [ "$variable" -gt 10 ]; then
+    echo "Die Variable ist größer als 10."
+fi
+
+<< 'aye'
+Hier wird die Variable $variable auf einen Wert größer als 10 geprüft.
+
+Geschweifte Klammern {}:
+Geschweifte Klammern haben in Bash verschiedene Anwendungen:
+
+Parameter-Erweiterung: Geschweifte Klammern können verwendet werden, 
+um Variablen zu erweitern und mit Text zu kombinieren.
+
+Beispiel:
+
+aye
+
+name="Alice"
+echo "Hallo, ${name}!"
+
+# Bereichserweiterung: Geschweifte Klammern können zur Erzeugung von Wertebereichen 
+# verwendet werden.
+
+# Beispiel:
+
+for i in {1..5}; do
+    echo "$i"
+done
+
+# Codeblöcke: Geschweifte Klammern werden verwendet, um Codeblöcke in Befehlen 
+# wie if, for, while zu definieren.
+
+# Beispiel:
+
+
+if [ "$variable" -eq 0 ]; then
+    echo "Die Variable ist null."
+else
+    echo "Die Variable ist nicht null."
+fi
+
+# Dollarzeichen $:
+# Das Dollarzeichen wird verwendet, um den Wert einer Variablen aufzurufen. Wenn du $variable 
+# verwendest, ruft Bash den Wert der Variable auf.
+
+# Beispiel:
+
+
+    name="Bob"
+    echo "Hallo, $name!"
+
+
+# Weiterer Use-Case für geschweifte Klammern:
+user="john"
+echo "Benutzer: ${user}_01"   # Gibt "Benutzer: john_01" aus
+
+index=2
+values=("A" "B" "C")
+echo "Wert: ${values[$index]}"  # Gibt "Wert: C" aus
+# Ausgabe:
+Benutzer: john_01
+Wert: C
+
+
+# Zusammengefasst werden runde Klammern verwendet, um Befehle auszuführen oder arithmetische 
+# Berechnungen durchzuführen, eckige Klammern für Bedingungsprüfungen und geschweifte Klammern
+# für Parameter-Erweiterung, Bereichserweiterung und Codeblöcke.
+
+Schleifen:
+for (( i=1; i<=5; i++ ))
+do
+    echo $i
+done
+
+
+<< 'Com'  for (( i=1; i<=5; i++ )) - Dies ist der Start einer "for"-Schleife. Sie initialisiert die Variable i auf 1, setzt die Bedingung, dass die Schleife ausgeführt wird, solange i kleiner oder gleich 5 ist, und erhöht i bei jedem Durchlauf um 1 (i++).
+
+    do - Dies kennzeichnet den Beginn des Schleifenkörpers. Alles, was zwischen do und done 
+    steht, wird in jeder Iteration der Schleife ausgeführt.
+
+    echo $i - Dies gibt den aktuellen Wert von i aus, also 1, 2, 3, 4 und 5.
+
+    done - Dies beendet den Schleifenkörper.
+
+Die obige Schleife läuft also von 1 bis 5 und gibt jeweils den Wert von i aus.
+Com
+
+
+
+Case-Konstruktion:
+
+#!/bin/bash
+
+# Dies ist eine Shebang-Zeile, die dem Betriebssystem mitteilt, dass es sich um ein Bash-Skript handelt.
+
+# Überprüfe die Anzahl der übergebenen Parameter
+
+if [ $# -lt 1 ]; then
+    echo "Verwendung: $0 <option>"
+    exit 1
+fi
+
+# Die obige Bedingung prüft, ob mindestens ein Parameter übergeben wurde.
+# $0 ist der Name des Skripts, $1 ist der erste Parameter, $2 der zweite usw.
+# -lt bedeutet "weniger als". Wenn weniger als 1 Parameter übergeben wurde, wird der folgende Block ausgeführt.
+
+# Speichere den ersten Parameter in einer Variable
+option=$1
+
+# Hier wird der erste Parameter (die Option) in einer Variable namens "option" gespeichert.
+
+# Fallunterscheidung basierend auf der übergebenen Option
+case $option in
+    "hallo")
+        echo "Hallo! Schön, dass du hier bist."
+        ;;
+    "welt")
+        echo "Die Welt ist ein faszinierender Ort."
+        ;;
+    "parameter")
+        echo "Du hast den Parameter 'parameter' übergeben."
+        ;;
+    *)
+        echo "Ungültige Option. Gültige Optionen sind: hallo, welt, parameter"
+        ;;
+esac
+
+# Hier beginnt die Fallunterscheidung basierend auf der gespeicherten Option.
+# Der "case" -Block vergleicht den Wert von "$option" mit verschiedenen Fällen.
+# Wenn die Option mit einem der Fälle übereinstimmt, wird der entsprechende Block ausgeführt.
+# Das "*)" ist der Standardfall, der ausgeführt wird, wenn keine der vorherigen Optionen übereinstimmt.
+# "esac" beendet die Fallunterscheidung.
+
+<< 'Com'
+    case - Dies ist der Start der Fallunterscheidung.
+    $option - Dies ist die Variable, die wir vergleichen möchten (in diesem Fall die übergebene Option).
+    in - Dies signalisiert den Beginn der Liste von möglichen Werten, die verglichen werden sollen.
+
+Dann folgt eine Liste von Fällen:
+
+    "hallo") - Wenn der Wert von $option "hallo" ist, wird der folgende Block ausgeführt.
+    echo "Hallo! Schön, dass du hier bist." - Dies ist die Aktion, die ausgeführt wird, wenn der Fall "hallo" zutrifft.
+    ;; - Dies beendet den aktuellen Fall und signalisiert, dass kein weiterer Code für diesen Fall ausgeführt werden soll.
+
+Der gleiche Ablauf folgt für die anderen Fälle ("welt" und "parameter").
+
+Schließlich haben wir:
+
+    *) - Dies ist der Standardfall, der ausgeführt wird, wenn keiner der vorherigen Fälle zutrifft.
+    echo "Ungültige Option. Gültige Optionen sind: hallo, welt, parameter" - Dies ist die Aktion, die ausgeführt wird, wenn kein anderer Fall zutrifft.
+    ;; - Dies beendet den Standardfall.
+
+Abschließend haben wir:
+
+    esac - Dies beendet die Fallunterscheidung.
+Com
+
+
+
+# Bedingungsprüfungen in Bash
+
+
+
+#    Prüfung auf Verzeichnisexistenz:
+
+verzeichnispfad="pfad_zum_verzeichnis"
+
+if [ -d "$verzeichnispfad" ]; then
+    echo "Das Verzeichnis existiert."
+else
+    echo "Das Verzeichnis existiert nicht."
+fi
+
+
+
+
+#    Prüfung auf Dateiexistenz und Lesbarkeit:
+
+dateipfad="pfad_zur_deiner_datei.txt"
+
+if [ -f "$dateipfad" ]; then
+    if [ -r "$dateipfad" ]; then
+        echo "Die Datei existiert und ist lesbar."
+    else
+        echo "Die Datei existiert, ist aber nicht lesbar."
+    fi
+else
+    echo "Die Datei existiert nicht."
+fi
+
+
+
+
+#    Prüfung auf Ausführbarkeit einer Datei:
+
+skriptpfad="pfad_zum_deinem_skript.sh"
+
+if [ -f "$skriptpfad" ]; then
+    if [ -x "$skriptpfad" ]; then
+        echo "Die Datei ist ausführbar."
+    else
+        echo "Die Datei ist vorhanden, aber nicht ausführbar."
+    fi
+else
+    echo "Die Datei existiert nicht."
+fi
+
+
+
+
+ #   Prüfung auf Dateigröße:
+
+dateipfad="pfad_zur_deiner_datei.txt"
+minimale_groesse=1024  # Größe in Bytes
+
+if [ -f "$dateipfad" ]; then
+    dateigroesse=$(stat -c %s "$dateipfad")
+    if [ "$dateigroesse" -ge "$minimale_groesse" ]; then
+        echo "Die Datei ist groß genug."
+    else
+        echo "Die Datei ist zu klein."
+    fi
+else
+    echo "Die Datei existiert nicht."
+fi
+
+    echo "Du bist siegreich"
+else
+<< 'Com'
+    dateipfad="pfad_zur_deiner_datei.txt": Hier wird der Pfad zur Datei, die du 
+    überprüfen möchtest, in der Variable dateipfad gespeichert. 
+    Ersetze "pfad_zur_deiner_datei.txt" durch den tatsächlichen Pfad zu deiner Datei.
+
+    minimale_groesse=1024: Hier wird die minimale Dateigröße festgelegt, die du 
+    überprüfen möchtest. In diesem Fall wird eine minimale Größe von 
+    1024 Bytes (1 Kilobyte) definiert. Du kannst diesen Wert entsprechend anpassen.
+
+    if [ -f "$dateipfad" ]; then: Diese Zeile    dateipfad="pfad_zur_deiner_datei.txt"
+    : Hier wird der Pfad zur Datei, die du überprüfen möchtest, in der Variable 
+    dateipfad gespeichert. Ersetze "pfad_zur_deiner_datei.txt" durch den 
+    tatsächlichen Pfad zu deiner Datei.
+
+    minimale_groesse=1024: Hier wird die minimale Dateigröße festgelegt, 
+    die du überprüfen möchtest. In diesem Fall wird eine minimale Größe 
+    von 1024 Bytes (1 Kilobyte) definiert. Du kannst diesen Wert entsprechend 
+    anpassen.
+
+    if [ -f "$dateipfad" ]; then: Diese Zeile prüft, ob die Datei am 
+    angegebenen Pfad existiert (-f steht für "file exists"). Das then 
+    signalisiert den Beginn des Codeblocks, der ausgeführt wird, wenn 
+    die Bedingung wahr ist.
+
+    dateigroesse=$(stat -c %s "$dateipfad"): Hier wird die Größe der Datei 
+    in Bytes ermittelt. Der Befehl stat -c %s ruft die Größe der Datei ab, 
+    und "$dateipfad" ist der durch die Variable definierte Dateipfad. 
+    Das Ergebnis wird in der Variable dateigroesse gespeichert.
+
+    if [ "$dateigroesse" -ge "$minimale_groesse" ]; then: In dieser 
+    Zeile wird geprüft, ob die Dateigröße ($dateigroesse) größer oder 
+    gleich der minimalen Größe ($minimale_groesse) ist. -ge steht 
+    für "greater than or equal" (größer oder gleich). Wenn die 
+    Bedingung wahr ist, wird der folgende Block ausgeführt.
+
+    echo "Die Datei ist groß genug.": Wenn die Datei groß genug ist, 
+    wird dieser Text auf der Konsole ausgegeben.
+
+    else: Dies ist der Zweig, der ausgeführt wird, wenn die Bedingung 
+    in Schritt 5 nicht erfüllt ist.
+
+    echo "Die Datei ist zu klein.": Wenn die Datei kleiner ist als 
+    die minimale Größe, wird dieser Text auf der Konsole ausgegeben.
+
+    fi: Dies beendet den Codeblock der inneren Bedingungsprüfung.
+
+    else: Dies ist der Zweig, der ausgeführt wird, wenn die Bedingung 
+    in Schritt 3 nicht erfüllt ist, also wenn die Datei nicht existiert.
+
+    echo "Die Datei existiert nicht.": In diesem Fall wird dieser Text 
+    auf der Konsole ausgegeben.
+
+    fi: Dies beendet den Codeblock der äußeren Bedingungsprüfung.Datei 
+    am angegebenen Pfad existiert (-f steht für "file exists"). 
+    Das then signalisiert den Beginn des Codeblocks, der ausgeführt wird, 
+    wenn die Bedingung wahr ist.
+
+    dateigroesse=$(stat -c %s "$dateipfad"): Hier wird die Größe der Datei 
+    in Bytes ermittelt. Der Befehl stat -c %s ruft die Größe der Datei ab, 
+    und "$dateipfad" ist der durch die Variable definierte Dateipfad. 
+    Das Ergebnis wird in der Variable dateigroesse gespeichert.
+
+    if [ "$dateigroesse" -ge "$minimale_groesse" ]; then: In dieser 
+    Zeile wird geprüft, ob die Dateigröße ($dateigroesse) größer oder 
+    gleich der minimalen Größe ($minimale_groesse) ist. -ge steht für 
+    "greater than or equal" (größer oder gleich). Wenn die Bedingung 
+    wahr ist, wird der folgende Block ausgeführt.
+
+    echo "Die Datei ist groß genug.": Wenn die Datei groß genug ist, 
+    wird dieser Text auf der Konsole ausgegeben.
+
+    else: Dies ist der Zweig, der ausgeführt wird, wenn die Bedingung in 
+    Schritt 5 nicht erfüllt ist.
+
+    echo "Die Datei ist zu klein.": Wenn die Datei kleiner ist als die minimale
+     Größe, wird dieser Text auf der Konsole ausgegeben.
+
+    fi: Dies beendet den Codeblock der inneren Bedingungsprüfung.
+
+    else: Dies ist der Zweig, der ausgeführt wird, wenn die Bedingung 
+    in Schritt 3 nicht erfüllt ist, also wenn die Datei nicht existiert.
+
+    echo "Die Datei existiert nicht.": In diesem Fall wird dieser Text 
+    auf der Konsole ausgegeben.
+
+    fi: Dies beendet den Codeblock der äußeren Bedingungsprüfung.
+Com 
+
+
+
+awk ist eine mächtige und flexible textbasierte Verarbeitungssprache, die hauptsächlich in der Unix/Linux-Shell verwendet wird. Sie wird verwendet, um Zeilen von Text zu durchsuchen, zu bearbeiten und zu analysieren. awk liest den Eingabetext zeilenweise, teilt jede Zeile in Felder auf (standardmäßig auf der Basis von Leerzeichen oder Tabulatoren) und ermöglicht es Ihnen, auf diese Felder zuzugreifen und damit Operationen durchzuführen.
+
+Die grundlegende Syntax von awk sieht so aus:
+
+bash
+
+awk 'MUSTER { AKTION }' DATEI
+
+    MUSTER: Ein Ausdruck, der bestimmt, welche Zeilen verarbeitet werden 
+    sollen. Wenn das Muster zutrifft, wird die angegebene Aktion ausgeführt.
+    AKTION: Die Aktionen, die auf die Zeilen angewendet werden, bei denen das Muster zutrifft.
+    DATEI: Die Datei, die von awk verarbeitet werden soll. Wenn keine 
+    Datei angegeben wird, liest awk von der Standardeingabe 
+    (normalerweise die Befehlszeile oder die Eingabeaufforderung des Benutzers).
+
+
+In Ihrem Fall lautet das Muster '$1 > 50', was bedeutet, dass die Aktion 
+ausgeführt wird, wenn das erste Feld (aufgeteilt nach Leerzeichen oder 
+Tabulatoren) größer als 50 ist.
+
+Hier ist eine einfache Erläuterung zu den Feldern:
+
+    $0: Die gesamte Zeile
+    $1: Das erste Feld (üblicherweise das erste Wort)
+    $2: Das zweite Feld
+    usw.
+
+Wenn Sie nun den Befehl awk '$1 > 50' zahlen.txt ausführen, durchläuft 
+awk jede Zeile der Datei "zahlen.txt". Für j

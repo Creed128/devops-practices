@@ -1,0 +1,36 @@
+Groups
+
+The group command tells about the group where current user belongs to.
+
+Syntax:
+
+    groups  
+
+
+
+
+Group File
+
+The /etc/group file defines the group membership. A user can be a member of more than one group.
+
+Syntax:
+
+    /etc/group  
+
+
+usermod
+
+The group members can be edited with usermod or useradd command. If a group is not listed then by default, usermod command will remove the user from every group of which he is a member. Here, -a (append) option is used to prevent this from happening.
+
+Syntax:
+
+    usermod -a -G <group> <userName>  
+
+
+gpasswd
+
+Control of group membership can be passed on to another user with gpasswd command.
+
+Syntax:
+
+    gpsswd -A <user> <group>  

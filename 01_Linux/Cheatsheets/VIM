@@ -1,0 +1,201 @@
+VIM:
+VIM ist der mit am weit verbreitetste Editor in der Linux/GNU-Welt, daher ist es unabsehbar ihn zu lernen.
+
+Vim besitzt ein umfassendes eingebautes Hilfesystem.  Für den Anfang probiere 
+eins der drei folgenden Dinge aus: 
+Drücke die <Hilfe> - Taste (falls Du eine besitzt) 
+Drücke die <F1> Taste (falls Du eine besitzt) 
+Tippe :help <ENTER> 
+
+Lies den Text im Hilfefenster, um zu verstehen wie die Hilfe funktioniert. 
+Tippe CTRL-W CTRL-W , um von einem Fenster zum anderen zu springen. 
+Tippe :q <ENTER> , um das Hilfefenster zu schließen.
+
+
+Die Syntax sieht folgendermaßen aus:
+h,j,k,l + die Pfeil-Tasten = Navigation innerhalb der betroffenen Datei
+ESC = um in den Standard-Navigationsmodus zu gelangen
+ESC + „:q!“ + ENTER = beendet VIM ohne zu speichern (bei Fehlern bspw.)
+ESC + „:wq“ + ENTER = bearbeitete Datei speichern (bei Gelingen)
+v = visueller Modus zum markieren
+y = zum kopieren des markierten 
+p = zum einfügen des markierten & kopierten 
+x = löscht das Zeichen unter dem Cursor sofort
+u = letztes Kommando rückgängig
+U = Um alle Änderungen einer Datei rückgängig zu machen
+CRTL + R = Um die Rückgängigmachung rückgängig zu machen
+/ = Um nach Wörtern zu suchen 
+bspw. /Fehhler ums nach dem Wort Fehhler zu suchen, ab da an mit n zum Nächsten und mit N zum Vorherigen Wort springen
+CTRL + 0 = springt zum anfängliche Punkt vor der Suche
+i = beginnt den Modus um Text einzufügen 
+a = beginnt den Text anfügen Modus
+a, i und A gehen alle gleichermaßen in den Einfügemodus; der 
+einzige Unterschied ist, wo die Zeichen eingefügt werden
+
+dw = löscht das nächste Wort
+d$ = löscht bis zum Zeilenende
+d ist hier nur ein Operator (delete) und die Anhänge w, e, $ sind dann die Bewegungszüge:
+Eine kleine Auflistung von Bewegungen:
+w - bis zum Beginn des nächsten Wortes OHNE dessen erstes Zeichen. 
+e - zum Ende des aktuellen Wortes MIT dessen letztem Zeichen. 
+$ - zum Ende der Zeile MIT dem letzten Zeichen
+Mit Druck auf % über einer Klammer findet man die Gegenüberliegende Klammer
+Das Format für ein Änderungskommando ist:
+               Operator   [Anzahl]   Bewegungsschritt
+       Operator - gibt an, was getan werden soll, zum Beispiel  d  für delete
+       [Anzahl] - ein optionaler Zähler, um den Bewegungsschritt zu wiederholen - d2
+       Bewegungsschritt - Bewegung über den zu ändernden Text, wie
+                  w (Wort), $ (zum Ende der Zeile), etc. - d2w
+
+
+Sonst gibt es noch folgende Bewegungsläufe:
+d2w (delete2words) = löscht nur die 2 darauf folgenden Wörter
+dd (löscht ganze Zeile) = löscht alle darauf folgenden Wörter in der jew. Zeile
+p = fügt das Gelöschte an der markierten Stelle wieder ein
+rx (replace x) = ersetzt das Zeichen unter dem Cursor mit dem jew. Zeichen nach r
+ce (change till end) = ersetzt ab dem Cursor alle Zeichen VIM:
+VIM ist der mit am weit verbreitetste Editor in der Linux/GNU-Welt, daher ist es unabsehbar ihn zu lernen.
+
+Vim besitzt ein umfassendes eingebautes Hilfesystem.  Für den Anfang probiere 
+eins der drei folgenden Dinge aus: 
+Drücke die <Hilfe> - Taste (falls Du eine besitzt) 
+Drücke die <F1> Taste (falls Du eine besitzt) 
+Tippe :help <ENTER> 
+
+Lies den Text im Hilfefenster, um zu verstehen wie die Hilfe funktioniert. 
+Tippe CTRL-W CTRL-W , um von einem Fenster zum anderen zu springen. 
+Tippe :q <ENTER> , um das Hilfefenster zu schließen.
+
+
+Die Syntax sieht folgendermaßen aus:
+h,j,k,l + die Pfeil-Tasten = Navigation innerhalb der betroffenen Datei
+ESC = um in den Standard-Navigationsmodus zu gelangen
+ESC + „:q!“ + ENTER = beendet VIM ohne zu speichern (bei Fehlern bspw.)
+ESC + „:wq“ + ENTER = bearbeitete Datei speichern (bei Gelingen)
+v = visueller Modus zum markieren
+y = zum kopieren des markierten 
+p = zum einfügen des markierten & kopierten 
+x = löscht das Zeichen unter dem Cursor sofort
+u = letztes Kommando rückgängig
+U = Um alle Änderungen einer Datei rückgängig zu machen
+CRTL + R = Um die Rückgängigmachung rückgängig zu machen
+/ = Um nach Wörtern zu suchen 
+bspw. /Fehhler ums nach dem Wort Fehhler zu suchen, ab da an mit n zum Nächsten und mit N zum Vorherigen Wort springen
+CTRL + 0 = springt zum anfängliche Punkt vor der Suche
+i = beginnt den Modus um Text einzufügen 
+a = beginnt den Text anfügen Modus
+a, i und A gehen alle gleichermaßen in den Einfügemodus; der 
+einzige Unterschied ist, wo die Zeichen eingefügt werden
+
+dw = löscht das nächste Wort
+d$ = löscht bis zum Zeilenende
+d ist hier nur ein Operator (delete) und die Anhänge w, e, $ sind dann die Bewegungszüge:
+Eine kleine Auflistung von Bewegungen:
+w - bis zum Beginn des nächsten Wortes OHNE dessen erstes Zeichen. 
+e - zum Ende des aktuellen Wortes MIT dessen letztem Zeichen. 
+$ - zum Ende der Zeile MIT dem letzten Zeichen
+Mit Druck auf % über einer Klammer findet man die Gegenüberliegende Klammer
+Das Format für ein Änderungskommando ist:
+               Operator   [Anzahl]   Bewegungsschritt
+       Operator - gibt an, was getan werden soll, zum Beispiel  d  für delete
+       [Anzahl] - ein optionaler Zähler, um den Bewegungsschritt zu wiederholen - d2
+       Bewegungsschritt - Bewegung über den zu ändernden Text, wie
+                  w (Wort), $ (zum Ende der Zeile), etc. - d2w
+
+
+Sonst gibt es noch folgende Bewegungsläufe:
+d2w (delete2words) = löscht nur die 2 darauf folgenden Wörter
+dd (löscht ganze Zeile) = löscht alle darauf folgenden Wörter in der jew. Zeile
+p = fügt das Gelöschte an der markierten Stelle wieder eindes jew. Wortes/Zeichenkette
+c$ = ersetzt bis zum Zeilenende alles.
+dw = Um vom Cursor bis zum nächsten Wort zu löschen, tippe: 
+d$ = Um vom Cursor bis zum Ende einer Zeile zu löschen
+dd = um ganze Zeile zu löschen
+2w [2words] = Cursor zwei Wörter vorwärts zu bewegen.
+3e[3end] = Cursor zum Ende des dritten Wortes zu bewegen. 
+O = Um eine Zeile ÜBERhalb des Cursors in den Insert-Mode zu gehen
+o = Um eine Zeile UNTERhalb des Cursors in den Insert-Mode zu gehen
+0 (Null) = zum Anfang der Zeile zu gelangen.
+G = Zum Ende der Datei begeben
+gg = zum Anfang der Datei begeben 
+R = Um mehr als ein Zeichen zu ersetzen
+CTRL-R = Um Rückgängigmachen rückgängig zu machen
+Um die Rückgängigmachungen rückgängig zu machen, tippe:   
+CTRL-G  = um deine Dateiposition sowie den Dateistatus anzuzeigen. 
+G = um Dich zu einer Zeile in der Datei zu begeben.
+:s/alt/neu = Um das erste Vorkommen des Wortes alt gegen neu zu ersetzen 
+:s/alt/neu/g = Um alle Vorkommen von "alt" in der Zeile ersetzen, tippe   
+:#,#s/alt/neu/g  = Um Ausdrücke innerhalb zweier Zeilen # zu ersetzen 
+:%s/alt/neu/g = Um alle Vorkommen in der ganzen Datei zu ersetzen, tippe  
+:%s/alt/neu/gc = Für eine jedesmalige Bestätigung, addiere 'c' (confirm) 
+
+:!Kommando  führt ein externes Kommando aus. 
+
+Einige nützliche Beispiele sind 
+(Unix) 
+!ls - zeigt eine Verzeichnisauflistung. 
+:!rm DATEINAME - entfernt Datei DATEINAME. 
+
+:w DATEINAME speichert die aktuelecho "2 - Mage"
+
+echo "3 - Prisoner"
+
+read -p "Wähle (1/2/3):"  warrior
+
+case $warrior in
+        "1")
+        echo "Du hast Samurai gewählt"
+        ;;
+        "2")
+        echo "Du hast Mage gewählt"
+        ;;
+        "3")
+        echo "Du hast Prisoner gewählt"
+        ;;
+        *)
+        echo "Ungültige Option"
+        exit 1
+        ;;
+esac
+
+Prob=$(( RANDOM % 2 ))
+read -p "Wähle Nummer (0 oder 1)" input
+if [[ $Prob -eq "1" &&  $Prob -eq $input ]]; then
+                echo "Du bist siegreich"
+else
+        echo "Du bist tot"
+
+:r DATEINAME = fügt den Inhalt der jeweiligen Datei ein UNTER dem Cursor
+Cursorposition ein.
+
+
+
+Weitere Befehle:
+'ic' 'ignorecase' Ignoriere Groß/Kleinschreibung bei einer Suche 
+'is' 'incsearch' Zeige Teilübereinstimmungen für einen Suchausdruck 
+'hls' 'hlsearch' Hebe alle passenden Ausdrücke hervor
+
+
+:set ic    ignoriert bei Suche Groß-und Kleinschreibung
+:set noic    sorgt wieder für case sensisitve Suche
+:set number 	Zeilennummern anzeigen. 	
+:set nonumber 	Zeilennummern nicht anzeigen.
+:set list 	Sonderzeichen anzeigen, siehe 
+:help listchars. 	
+:set nolist 	Sonderzeichen ausblenden.
+:syntax on 	Syntaxhighlighting aktivieren (gegenwärtige Farbeinstellungen zur Hervorhebung werden nicht berücksichtigt). 	:syntax off 	Syntaxhighlighting deaktivieren.
+:set compatible 	VIM kompatibler zu Vi einstellen. Mit dieser Option sind einige Befehle und Optionen nicht mehr verfügbar. 	
+:set nocompatible 	VIM ohne Rücksicht auf Kompatibilität zu Vi einstellen (empfohlen).
+:set mouse=a 	Stellt Mausunterstützung in allen Modi bereit. 	
+:set mouse= 	Deaktiviert Mausunterstützung.
+:set autoindent 	Rückt Text automatisch ein. 	
+:set noautoindent 	Rückt Text nicht automatisch ein.
+:set ignorecase 	Ignoriert beim Suchen standardmäßig Groß- und Kleinschreibung. 	
+:set noignorecase 	Beachtet beim Suchen standardmäßig Groß- und Kleinschreibung.
+:set incsearch 	Während der Suche zum entsprechenden Text springen. 	
+:set noincsearch 	Während der Suche nicht zum entsprechenden Text springen.
+:set hlsearch 	Suchergebnisse farbig hervorheben. Temporär (bis zur nächsten Suche) deaktivieren mit: 
+:nohls 	
+:set nohlsearch 	Suchergebnisse nicht farbig hervorheben.
+:set showmode 	In der Statusleiste anzeigen, ob der Normalmodus oder der Einfügemodus gerade aktiv ist. 	
+:set noshowmode 	Die Anzeige des gerade aktiven Modus wieder unterdrücken. 
