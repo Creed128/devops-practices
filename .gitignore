@@ -53,3 +53,4 @@ vendor/pkg/
 pyenv
 Vagrantfile
 *.retry01_Linux/Cheatsheets/rclone
+01_Linux/Cheatsheets/rclone
