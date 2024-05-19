@@ -13,7 +13,7 @@ Welcome to our weekly task management and collaboration process! We'll be using 
 - You'll receive a meeting link separately via email.
 
 ## Communication
-- If you have any questions, concerns, or face difficulties with your tasks, don't hesitate to contact me at maximilian.gross@haeger-consulting.de.
+- If you have any questions, concerns, or face difficulties with your tasks, don't hesitate to contact me at creongoukeng@gmail.com.
 - I'll try to assist and guide you in the right direction :) 
   
 
